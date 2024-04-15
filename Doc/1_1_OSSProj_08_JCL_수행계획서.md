@@ -34,11 +34,11 @@
 - 네이버 뉴스에서는 AI 알고리즘을 이용하여 기사의 내용을 짧게 자동으로 추출하는 서비스인 요약봇 서비스를 제공한다. 뉴스 기사를 열람할 때 해당 기사의 요약 내용을 확인할 수 있는 기능을 제공한다.
 - 직접 기사를 클릭해서 들어가야 요약을 확인할 수 있다. 하루의 뉴스를 전체적으로 확인하기엔 불편함이 있다.
 
-![alt text](./images/Untitled 9.png)
+![alt text](./images/Untitled9.png)
 
 
 ### 2. 참고 프로젝트 분석
-![alt text](./images/Untitled 10.png)
+![alt text](./images/Untitled10.png)
 
 1. 기존 프로젝트: 네이버 뉴스 요약 사이트로 특정 검색어를 입력하면 그에 따른 최신 네이버 뉴스를 요약해서 제공하는 웹 서비스
 2. 사용한 Open API:  NAVER 검색(뉴스) API, NAVER Cloud 요약 API
@@ -102,15 +102,15 @@
 
 - 화면 설계서
 
-![alt text](./images/Untitled 1.png)
+![alt text](./images/Untitled1.png)
 
-![alt text](./images/Untitled 2.png)
+![alt text](./images/Untitled2.png)
 
-![alt text](./images/Untitled 3.png)
+![alt text](./images/Untitled3.png)
 
-![alt text](./images/Untitled 4.png)
+![alt text](./images/Untitled4.png)
 
-![alt text](./images/Untitled 5.png)
+![alt text](./images/Untitled5.png)
 
 
 ### (3) 대안 도출 및 구현 계획
@@ -125,7 +125,7 @@
 
 - 시스템 구성도
     
-![alt text](./images/Untitled 6.png)
+![alt text](./images/Untitled6.png)
 
     
 
@@ -147,7 +147,7 @@ c. 효율적인 정보 관리
 - 세부 작업에 대한 간트차트
 - 세부 작업 별 구성원의 역할
 
-![alt text](./images/Untitled 7.png)
+![alt text](./images/Untitled7.png)
 
 
 | 이규민 | 프론트엔드, 문서관리, 일정관리 |
