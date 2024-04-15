@@ -34,29 +34,29 @@
 - 네이버 뉴스에서는 AI 알고리즘을 이용하여 기사의 내용을 짧게 자동으로 추출하는 서비스인 요약봇 서비스를 제공한다. 뉴스 기사를 열람할 때 해당 기사의 요약 내용을 확인할 수 있는 기능을 제공한다.
 - 직접 기사를 클릭해서 들어가야 요약을 확인할 수 있다. 하루의 뉴스를 전체적으로 확인하기엔 불편함이 있다.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/50a6c217-e6f8-4a29-aa19-2db94a5e5284/ebf2a003-6c12-436a-8c1c-05763d38bd50.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/ebf2a003-6c12-436a-8c1c-05763d38bd50.png)
 
 ### 2. 참고 프로젝트 분석
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/7371a51d-67c9-4f52-bda5-5153e6a16e4c/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled.png)
 
 1. 기존 프로젝트: 네이버 뉴스 요약 사이트로 특정 검색어를 입력하면 그에 따른 최신 네이버 뉴스를 요약해서 제공하는 웹 서비스
 2. 사용한 Open API:  NAVER 검색(뉴스) API, NAVER Cloud 요약 API
 3. 핵심기능
     
-     1. 뉴스 검색
+    1. 뉴스 검색
     
     네이버 뉴스 검색 api를 통해 입력한 키워드에 맞는 네이버 뉴스를 최신 순으로 가져온다.
     
-    1. 뉴스 업데이트
+    2. 뉴스 업데이트
     
     가장 최신 뉴스의 날짜, 제목, 본문을 보여준다.
     
-    1. 뉴스 요약
+    3. 뉴스 요약
     
     ‘요약하기’ 버튼을 클릭하면 NCloud 요약 api를 사용해 뉴스 본문을 요약한다.
     
-    1. 다음 버튼 및 이전 버튼
+    4. 다음 버튼 및 이전 버튼
     
     버튼을 클릭해 다음 or 이전 뉴스를 보여준다.
     
@@ -102,19 +102,19 @@
 
 - 화면 설계서
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/4d4842d1-1b47-4421-9e2d-84ef6041041f/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%201.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/b0979371-6f23-4374-babb-25ea9ac3f036/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%202.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/946e1a58-d421-4833-b77e-a9e488d17fcc/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%203.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/be620092-4218-42f7-bb4e-5d6ceb6d9ae3/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%204.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/78c6808c-6914-4041-81b9-e717add07cfd/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%205.png)
 
 ### (3) 대안 도출 및 구현 계획
 
-[API 명세서 (1)](https://www.notion.so/bbaeb38e51434b13b464cce988571347?pvs=21)
+[API 명세서 (1)](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/API%20%E1%84%86%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A6%E1%84%89%E1%85%A5%20(1)%20bbaeb38e51434b13b464cce988571347.csv)
 
 ### (4) 설계의 현실적 제한요소(제약조건)
 
@@ -124,7 +124,7 @@
 
 - 시스템 구성도
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/ab2dced2-40ad-4256-b6ee-bc3656026f1f/Untitled.png)
+    ![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%206.png)
     
 
 ### 2.4 기대효과
@@ -145,7 +145,7 @@ c. 효율적인 정보 관리
 - 세부 작업에 대한 간트차트
 - 세부 작업 별 구성원의 역할
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/f50784d6-41fe-41e3-9f49-9ffa6a828ed0/Untitled.png)
+![Untitled](OSS%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%92%E1%85%A2%E1%86%BC%E1%84%80%E1%85%A8%E1%84%92%E1%85%AC%E1%86%A8%E1%84%89%E1%85%A5%20abb13d4333b74fc1aa48fd45d923c7f9/Untitled%207.png)
 
 | 이규민 | 프론트엔드, 문서관리, 일정관리 |
 | --- | --- |
@@ -154,9 +154,9 @@ c. 효율적인 정보 관리
 
 ### 2.6 참고문헌
 
-https://github.com/woorifisa-service-dev-2nd/fronted-2nd-newsSummary
+[https://github.com/woorifisa-service-dev-2nd/fronted-2nd-newsSummary](https://github.com/woorifisa-service-dev-2nd/fronted-2nd-newsSummary)
 
-https://ai-creator.tistory.com/m/36
+[https://ai-creator.tistory.com/m/36](https://ai-creator.tistory.com/m/36)
 
 ### 2.7 성과창출 계획
 
