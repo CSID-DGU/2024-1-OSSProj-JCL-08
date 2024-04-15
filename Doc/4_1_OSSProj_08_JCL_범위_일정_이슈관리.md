@@ -2,7 +2,7 @@
 
 ## 범위/일정 관리  
 - 간트차트
-![alt text](image.png)
+![alt text](./images/gantt.png)
 
 ## 이슈 관리  
 
