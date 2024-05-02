@@ -22,6 +22,6 @@ from accounts.views import registration_view # 추가
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include('accounts.urls')),
-    path('rest-auth/', include('dj_rest_auth.urls')),
+    path('accounts/', include('dj_rest_auth.urls')),
 
 ]
