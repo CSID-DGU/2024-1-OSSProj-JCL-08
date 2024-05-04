@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import "./index.css";
 import { Login } from "./pages/Login/Login.jsx";
 import { Join } from "./pages/Join/Join.jsx";
 import { Category } from "./pages/Category/Category.jsx";
