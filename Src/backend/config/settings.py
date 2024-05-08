@@ -64,6 +64,7 @@ INSTALLED_APPS = [
 
     # 앱
     "accounts",  # 유저 정보 관련 기능
+    "mainpage", # 메인페이지 관련 기능
 ]
 
 REST_USE_JWT = True #jwt 사용 여부
