@@ -1,0 +1,20 @@
+# 개발에 사용되는 IDE 설정 디렉토리
+.idea/
+.vscode/
+
+# 버전 관리 시스템 관련 디렉토리
+.git/
+.gitignore
+
+# 로컬 개발 환경 설정 파일
+.env
+
+# 의존성 패키지 디렉토리
+node_modules/
+
+# 개발 중에 생성되는 임시 파일 및 디렉토리
+npm-debug.log
+yarn-error.log
+
+# 테스트 데이터 파일
+test_data/
