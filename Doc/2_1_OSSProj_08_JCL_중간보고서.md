@@ -38,7 +38,7 @@
 
 
 ### 2. 참고 프로젝트 분석
-![alt text](./images/Untitled9.png)
+![alt text](./images/Untitled10.png)
 
 1. 기존 프로젝트: 네이버 뉴스 요약 사이트로 특정 검색어를 입력하면 그에 따른 최신 네이버 뉴스를 요약해서 제공하는 웹 서비스
 2. 사용한 Open API:  NAVER 검색(뉴스) API, NAVER Cloud 요약 API
@@ -97,41 +97,36 @@
 
 - 화면 설계서
 
-![alt text](./images/Untitled1.png)
+![alt text](./images/화면설계1.png)
 
-![alt text](./images/Untitled2.png)
+![alt text](./images/화면설계2.png)
 
-![alt text](./images/Untitled3.png)
-
-![alt text](./images/Untitled4.png)
-
-![alt text](./images/Untitled5.png)
-
-1. **최종 설계 결과물의 시스템 구성과 기능, 특징 등**
+2. **최종 설계 결과물의 시스템 구성과 기능, 특징 등**
 - **시스템 기능**
     
-    [요구사항 정의서](https://www.notion.so/56bd860dc7134d22ba5f76a18776dc87?pvs=21)
+![alt text](./images/요구사항정의서.png)
     
 
 - **블록 다이어그램**: 전체적인 시스템 구성
 
-![블록다이어그램.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/87766adc-d689-4125-a99e-ca06f26b1937/%EB%B8%94%EB%A1%9D%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png)
+![alt text](./images/블록다이어그램.png)
 
 - **유스케이스 다이어그램:**  이용자 ↔ 시스템 사이 상호작용
     
-    ![유스케이스_02.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/afe0d3fd-0478-4582-8dad-09fd2e6a0221/%E1%84%8B%E1%85%B2%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3_02.png)
-    
+![alt text](./images/유스케이스.png)
+
 
 시나리오
 
 - 비회원은 회원가입을 해야 서비스 이용이 가능하다.
 - 시스템은 네이버 뉴스를 크롤링해 온 후 요약 API를 통해 기사를 요약한다.
 - 이용자가 카테고리 선택을 하면 요약 API를 통해 카테고리에 맞는 요약된 뉴스를 제공 받는다.
-- 이용자는 관심 있는 뉴스에 북마크를 하면, 북마크 페이지에서 북마크 한 요약된 기사들을 모아 볼 수 있다.
+- 이용자는 관심 있는 뉴스에 북마크를 하면, 북마크 페이지에서 북마크 한 요약된 기사들을 모아 볼 수 있다. <br/>
 
-- **시퀀스 다이어그램:** 각 컴포넌트(클라이언트, 서버, 데이터베이스, 웹사이트) 사이의 관계를 표현
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/89391548-4da9-478c-9733-5b2203cdf531/Untitled.png)
+**시퀀스 다이어그램:** 각 컴포넌트(클라이언트, 서버, 데이터베이스, 웹사이트) 사이의 관계를 표현
+
+![alt text](./images/시퀀스.png)
 
 ### (3) 대안 도출 및 구현 계획
 
@@ -171,27 +166,24 @@
 
 - API 명세서
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/c1d3af87-1230-4b2a-a5f5-040f285c0f5c/Untitled.png)
+![alt text](./images/API명세서.png)
 
 - ERD 정의서
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/d616a342-8078-492b-b72f-6687ffeb1dbf/Untitled.png)
+![alt text](./images/ERD.png)
 
 - 주요 기능 구현하기 위한 방법
     - 로그인, 회원가입
     
-    크롤링 및 요약
-    
-    - 파이썬의 beautifulsoup4 라이브러리를 이용하여 카테고리별 뉴스 정보 크롤링
-    - gensim 라이브러리를 이용하여 크롤링한 뉴스 요약
+    - 크롤링 및 요약
+        - 파이썬의 beautifulsoup4 라이브러리를 이용하여 카테고리별 뉴스 정보 크롤링
+        - gensim 라이브러리를 이용하여 크롤링한 뉴스 요약
         
-         <경제 뉴스 크롤링과 요약 예시>
+         <정치 뉴스 크롤링과 요약 예시>
         
-        ![뉴스요약_사회.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/c0b1d163-abc0-412e-a9a8-c6201492574a/0177ee95-d2cc-479d-a1c8-d1589a4b4740/%E1%84%82%E1%85%B2%E1%84%89%E1%85%B3%E1%84%8B%E1%85%AD%E1%84%8B%E1%85%A3%E1%86%A8_%E1%84%89%E1%85%A1%E1%84%92%E1%85%AC.png)
+        ![alt text](./images/뉴스요약.png)
         
-            <경제 뉴스 크롤링과 요약 예시>
-        
-        - 뉴스기사의 제목, 등록 시간, url, 이미지를 크롤링하여 가져오고, content에는 요약된 뉴스 본문을 가져온다.
+        - 뉴스기사의 제목, 등록 시간, url, 이미지를 크롤링하여 가져오고,     content에는 gensim 라이브러리로 요약한 뉴스 본문을 가져온다.
     
 
 ### (4) 설계의 현실적 제한요소(제약조건)
