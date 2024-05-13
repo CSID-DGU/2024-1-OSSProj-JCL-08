@@ -207,4 +207,3 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 LOGIN_URL = 'accounts/login/'
-ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
