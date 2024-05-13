@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'corsheaders', #front 통신 관련
 
     # 앱
-    "accounts",  # 유저 정보 관련 기능
+    'accounts',  # 유저 정보 관련 기능
     "mainpage", # 메인페이지 관련 기능
 ]
 
@@ -199,7 +199,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 #django sites app setting
 # 미디어 파일이 저장될 디렉토리 경로 설정
 # MEDIA_URL = '/media/'
@@ -207,3 +207,4 @@ AUTH_USER_MODEL = 'auth.User'
 
 
 LOGIN_URL = 'accounts/login/'
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'

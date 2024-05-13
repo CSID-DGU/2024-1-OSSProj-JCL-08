@@ -65,7 +65,6 @@ def get_news_contents(url):
         news_contents = news_contents.replace("\n", "").replace("\\", "")
     else:
         print("Failed to retrieve news contents from:", url)
-
     return news_contents
 
 
