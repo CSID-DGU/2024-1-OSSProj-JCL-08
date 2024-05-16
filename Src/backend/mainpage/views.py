@@ -21,6 +21,8 @@ class PoliticsNewsAPIView(APIView):
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
+                "img": news["img_url"]
+
             }
             summarized_politics_news.append(summarized_news_with_info)
 
@@ -41,6 +43,8 @@ class EconomyNewsAPIView(APIView):
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
+                "img": news["img_url"]
+
             }
             summarized_economy_news.append(summarized_news_with_info)
 
@@ -56,12 +60,13 @@ class SocietyNewsAPIView(APIView):
         summarized_society_news = []
         for news in society_news:
             # 개별 뉴스를 요약
-            summarized_news = summarize(news['news_contents'], ratio=0.4)
+            summarized_news = summarize(news['news_contents'], ratio=0.2)
             # 요약된 뉴스 정보를 딕셔너리로 유지하고, 필요한 정보를 추가
             summarized_news_with_info = {
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
+                "img":news["img_url"]
             }
             summarized_society_news.append(summarized_news_with_info)
 

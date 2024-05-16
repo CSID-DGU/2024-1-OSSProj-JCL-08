@@ -70,6 +70,15 @@ def get_news_contents(url):
         print("Failed to retrieve news contents from:", url)
     return news_contents
 
+def get_news_img(url):
+    soup = get_soup_obj(url)
+    img_tag = soup.find('img', id="img1")
+    if img_tag:
+        img_url = img_tag['data-src']
+        return img_url
+    else:
+        print("Failed to retrieve image from:", url)
+        return "NO image"
 
 # '정치', '경제', '사회' 분야의 상위 5개 뉴스 크롤링
 def get_naver_news_top5():
@@ -89,8 +98,10 @@ def get_naver_news_top5():
             # 뉴스 본문 가져오기
             news_url = news['news_url']
             news_contents = get_news_contents(news_url)
+            news_imgurl = get_news_img(news_url)
             # 뉴스 정보를 저장하는 dictionary를 구성
             news['news_contents'] = news_contents
+            news['img_url'] = news_imgurl
         news_dic[sec] = news_info
     return news_dic
 
