@@ -1,0 +1,1 @@
+export { Society } from "./Society";

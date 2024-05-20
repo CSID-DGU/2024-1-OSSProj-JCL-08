@@ -21,7 +21,7 @@ import {
   NewsImage
 } from "./styled";
 
-export const Main = () => {
+export const Society = () => {
   const navigate = useNavigate();
 
   //카테고리 선택 버튼
@@ -32,13 +32,13 @@ export const Main = () => {
     console.log("Selected Category:", category);
   };
   
-  const [selectedCategory, setSelectedCategory] = useState("politics"); // 기본값은 '정치'
+  const [selectedCategory, setSelectedCategory] = useState(); // 기본값은 '정치'
   const [newsData, setNewsData] = useState([]);
 
   // 카테고리에 따른 뉴스 데이터를 불러오는 함수
   const fetchNewsData = async (category) => {
     const response = await axios.get(
-      `http://localhost:8000/mainpage/${category}/`
+      `http://localhost:8000/mainpage/society/`
     );
     setNewsData(response.data.summarized_news);
   };
@@ -74,16 +74,16 @@ export const Main = () => {
       </TypoContainer>
 
       <CategoryBox>
-        <CategoryButton onClick={() => setSelectedCategory("politics")}>
+        <CategoryButton onClick={() => navigate("/politics")}>
           <Typo size="22px">정치</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => setSelectedCategory("economy")}>
+        <CategoryButton onClick={() => navigate("/economy")}>
           <Typo size="22px">경제</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => setSelectedCategory("society")}>
+        <CategoryButton onClick={() => navigate("/society")}>
           <Typo size="22px">사회</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => handleButtonClick("bookmark")}>
+        <CategoryButton onClick={() =>  navigate("/bookmark")}>
           <Typo size="22px">북마크</Typo>
         </CategoryButton>
       </CategoryBox>

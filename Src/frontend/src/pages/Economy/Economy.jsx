@@ -1,3 +1,4 @@
+//Economy.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -21,7 +22,7 @@ import {
   NewsImage
 } from "./styled";
 
-export const Main = () => {
+export const Economy = () => {
   const navigate = useNavigate();
 
   //카테고리 선택 버튼
@@ -32,21 +33,25 @@ export const Main = () => {
     console.log("Selected Category:", category);
   };
   
-  const [selectedCategory, setSelectedCategory] = useState("politics"); // 기본값은 '정치'
+  const [selectedCategory, setSelectedCategory] = useState(); // 기본값은 '정치'
   const [newsData, setNewsData] = useState([]);
 
   // 카테고리에 따른 뉴스 데이터를 불러오는 함수
   const fetchNewsData = async (category) => {
     const response = await axios.get(
-      `http://localhost:8000/mainpage/${category}/`
+      `http://localhost:8000/mainpage/economy/`
     );
     setNewsData(response.data.summarized_news);
   };
 
   // selectedCategory가 변경될 때마다 fetchNewsData 함수를 호출
   useEffect(() => {
-    fetchNewsData(selectedCategory);
-  }, [selectedCategory]);
+    fetchNewsData();
+
+    // localStorage에서 북마크 상태 불러오기
+    const savedBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || {};
+    setBookmarkedContents(savedBookmarks);
+  }, []);
 
 
   //북마크
@@ -60,12 +65,15 @@ export const Main = () => {
     newsData.map(() => false)
   );
 
-  // 북마크 토글 함수
-  const handleBookmarkClick = (index) => {
-    const newBookmarkedContents = [...bookmarkedContents];
-    newBookmarkedContents[index] = !newBookmarkedContents[index];
+  const handleBookmarkClick = (Index) => {
+    const newBookmarkedContents = {...bookmarkedContents};
+    newBookmarkedContents[Index] = !newBookmarkedContents[Index];
     setBookmarkedContents(newBookmarkedContents);
+
+    // localStorage에 저장
+    localStorage.setItem("bookmarks", JSON.stringify(newBookmarkedContents));
   };
+  
   return (
     <Root>
       <TypoContainer>
@@ -74,19 +82,20 @@ export const Main = () => {
       </TypoContainer>
 
       <CategoryBox>
-        <CategoryButton onClick={() => setSelectedCategory("politics")}>
+        <CategoryButton onClick={() => navigate("/politics")}>
           <Typo size="22px">정치</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => setSelectedCategory("economy")}>
+        <CategoryButton onClick={() => navigate("/economy")}>
           <Typo size="22px">경제</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => setSelectedCategory("society")}>
+        <CategoryButton onClick={() => navigate("/society")}>
           <Typo size="22px">사회</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => handleButtonClick("bookmark")}>
+        <CategoryButton onClick={() =>  navigate("/bookmark")}>
           <Typo size="22px">북마크</Typo>
         </CategoryButton>
       </CategoryBox>
+
 
       <ContentsBox>
         {newsData && newsData.map((news, index) => (
