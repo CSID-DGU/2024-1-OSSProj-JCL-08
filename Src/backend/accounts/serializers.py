@@ -49,6 +49,8 @@ class TokenSerializer(serializers.Serializer):
     access = serializers.CharField()
 
 class CustomLoginSerializer(LoginSerializer):
+    username = serializers.CharField(max_length=150, required=True)
+    password = serializers.CharField(style={'input_type': 'password'},required=True, write_only=True)
     def validate(self, attrs):
         data = super().validate(attrs)
 
