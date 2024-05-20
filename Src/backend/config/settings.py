@@ -207,7 +207,8 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-LOGIN_URL = 'accounts/login/'
+LOGIN_URL = reverse_lazy('accounts/login/')
+
 
 CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
 CORS_ALLOW_CREDENTIALS = True

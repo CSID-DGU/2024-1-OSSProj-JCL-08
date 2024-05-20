@@ -51,7 +51,7 @@ export const Login = () => {
 */
       // 로그인 성공 후
       setIsLoggedIn(true);
-      //setUserState(user);
+      setUserState(user);
 
       navigate('/main');
       window.location.reload();
