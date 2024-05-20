@@ -8,6 +8,7 @@ import bs4.element
 import datetime
 
 
+
 # BeautifulSoup 객체 생성
 def get_soup_obj(url):
     # 유저 정보 기입. www.useragentstring.com/
@@ -25,9 +26,9 @@ def get_top5_news_info(sec, sid):
     default_img = "https://search.naver.com/search.naver?where=image&sm=tab_jum&query=naver#"
 
     # 해당 분야 상위 뉴스 목록 주소
-    sec_url = "https://news.naver.com/main/list.nhn?mode=LSD&mid=sec" \
-              + "&sid1=" \
-              + sid
+    sec_url = "https://news.naver.com/section/" \
+              + sid \
+
     print("section url : ", sec_url)
 
     # 해당 분야 상위 뉴스 HTML 가져오기
@@ -35,15 +36,14 @@ def get_top5_news_info(sec, sid):
 
     # 해당 분야 상위 뉴스 5개 가져오기
     news_list5 = []
-    lis5 = soup.find('ul', class_='type06_headline').find_all("li", limit=9)
+    lis5 = soup.find('ul', class_='sa_list').find_all("li",class_="sa_item _SECTION_HEADLINE", limit=5)
     for li in lis5:
+        title = li.find("strong", class_="sa_text_strong").text
+        title.replace("\\","").replace("\n","")
         # title : 뉴스 제목, news_url : 뉴스 URL, image_url : 이미지 URL
         news_info = {
-            "title": li.img.attrs.get('alt') if li.img else li.a.text.replace("\n", "").replace("\t", "").replace("\r",
-                                                                                                                  ""),
-            "date": li.find(class_="date").text,
-            "news_url": li.a.attrs.get('href'),
-            "image_url": li.img.attrs.get('src') if li.img else default_img
+            "title": title,
+            "news_url": li.find("a", class_="sa_text_title")["href"],
         }
         news_list5.append(news_info)
 
@@ -53,8 +53,9 @@ def get_top5_news_info(sec, sid):
 # 뉴스 본문 가져오기
 def get_news_contents(url):
     soup = get_soup_obj(url)
-    body = soup.find('div', class_="newsct_article _article_body")
+    body = soup.find('article', class_="go_trans _article_content")
     news_contents = ''
+
     if body:
         for content in body.stripped_strings:
             if len(content.strip()) > 0:
@@ -62,12 +63,22 @@ def get_news_contents(url):
                 # 뉴스 요약을 위하여 '.' 마침표 뒤에 한칸을 띄워 문장을 구분하도록 함
                 news_contents += content.strip() + ' '
         # 줄 바꿈 문자와 역슬래시 제거
-        news_contents = news_contents.replace("\n", "").replace("\\", "")
+        news_contents = news_contents.replace("\n", "")
+        news_contents = news_contents.replace("\\", "")
+
     else:
         print("Failed to retrieve news contents from:", url)
-
     return news_contents
 
+def get_news_img(url):
+    soup = get_soup_obj(url)
+    img_tag = soup.find('img', id="img1")
+    if img_tag:
+        img_url = img_tag['data-src']
+        return img_url
+    else:
+        print("Failed to retrieve image from:", url)
+        return "NO image"
 
 # '정치', '경제', '사회' 분야의 상위 5개 뉴스 크롤링
 def get_naver_news_top5():
@@ -87,15 +98,17 @@ def get_naver_news_top5():
             # 뉴스 본문 가져오기
             news_url = news['news_url']
             news_contents = get_news_contents(news_url)
-
+            news_imgurl = get_news_img(news_url)
             # 뉴스 정보를 저장하는 dictionary를 구성
             news['news_contents'] = news_contents
-
+            news['img_url'] = news_imgurl
         news_dic[sec] = news_info
-
     return news_dic
 
 
 # 함수 호출 - '정치', '경제', '사회' 분야의 상위 3개 뉴스 크롤링
 news_dic = get_naver_news_top5()
 
+# print(news_dic['eco'])
+# print(news_dic['pol'])
+# print(news_dic['soc'])

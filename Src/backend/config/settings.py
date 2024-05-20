@@ -63,13 +63,25 @@ INSTALLED_APPS = [
     'corsheaders', #front 통신 관련
 
     # 앱
-    "accounts",  # 유저 정보 관련 기능
+    'accounts',  # 유저 정보 관련 기능
     "mainpage", # 메인페이지 관련 기능
+    "bookmark", # 북마크 관련 기능
+    "crawling"
 ]
 
 REST_USE_JWT = True #jwt 사용 여부
 JWT_AUTH_COOKIE = 'accounts-auth' # 호출할 cookie key 값
 JWT_AUTH_REFRESH_COOKIE = 'accounts-refresh-token' # refresh token cookie key 값
+# JWT_SECRET_KEY 설정 추가
+JWT_SECRET_KEY = env('JWT_SECRET_KEY')
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+
+
 
 REST_FRAMEWORK = {
     # 토큰을 통한 인증을 기본 인증 클래스로
@@ -93,7 +105,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'allauth.account.middleware.AccountMiddleware',
-
+    'corsheaders.middleware.CorsMiddleware',
 ]
 REST_AUTH = {
    "REGISTER_SERIALIZER":"accounts.serializers.CustomRegisterSerializer",
@@ -194,11 +206,15 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 #django sites app setting
 # 미디어 파일이 저장될 디렉토리 경로 설정
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-LOGIN_URL = 'accounts/login/'
+LOGIN_URL = reverse_lazy('accounts/login/')
+
+
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
+CORS_ALLOW_CREDENTIALS = True
