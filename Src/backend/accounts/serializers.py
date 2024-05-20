@@ -1,5 +1,6 @@
 # accounts/serializers.py
-
+from dj_rest_auth.serializers import LoginSerializer
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
@@ -8,6 +9,8 @@ from allauth.account.adapter import get_adapter
 
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import CustomUser
 
 
@@ -40,3 +43,26 @@ class CustomRegisterSerializer(RegisterSerializer):
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
+
+class TokenSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+    access = serializers.CharField()
+
+class CustomLoginSerializer(LoginSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # 사용자 정보를 가져옵니다.
+        user = authenticate(username=attrs['username'], password=attrs['password'])
+
+        if user:
+            self.user = user
+        else:
+            raise serializers.ValidationError('Invalid login credentials')
+        # JWT 토큰을 생성합니다.
+        refresh = RefreshToken.for_user(user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+
+        data['user'] = user
+        return data
