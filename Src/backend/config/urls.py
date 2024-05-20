@@ -17,12 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from dj_rest_auth.registration.views import RegisterView
-from accounts.views import CustomRegisterView # 추가
+from accounts.views import CustomRegisterView, CustomLoginView  # 추가
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('accounts/login/', CustomLoginView.as_view(), name='login'),
     path("accounts/", include('accounts.urls')),
-    path('accounts/', include('dj_rest_auth.urls')),  # 로그인 및 로그아웃 URL
+    # path('accounts/', include('dj_rest_auth.urls')),  # 로그인 및 로그아웃 URL
     path('mainpage/', include('mainpage.urls')),
 ]

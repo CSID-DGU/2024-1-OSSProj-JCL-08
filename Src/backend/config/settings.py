@@ -65,12 +65,23 @@ INSTALLED_APPS = [
     # 앱
     'accounts',  # 유저 정보 관련 기능
     "mainpage", # 메인페이지 관련 기능
+    "bookmark", # 북마크 관련 기능
     "crawling"
 ]
 
 REST_USE_JWT = True #jwt 사용 여부
 JWT_AUTH_COOKIE = 'accounts-auth' # 호출할 cookie key 값
 JWT_AUTH_REFRESH_COOKIE = 'accounts-refresh-token' # refresh token cookie key 값
+# JWT_SECRET_KEY 설정 추가
+JWT_SECRET_KEY = env('JWT_SECRET_KEY')
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+
+
 
 REST_FRAMEWORK = {
     # 토큰을 통한 인증을 기본 인증 클래스로
@@ -152,7 +163,7 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
-#         'NAME': 'asapDB',
+#         'NAME': 'mydb',
 #         'HOST': '127.0.0.1',
 #         'PORT': 27017,
 #     }
