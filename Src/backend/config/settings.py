@@ -94,7 +94,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'allauth.account.middleware.AccountMiddleware',
-
+    'corsheaders.middleware.CorsMiddleware',
 ]
 REST_AUTH = {
    "REGISTER_SERIALIZER":"accounts.serializers.CustomRegisterSerializer",
@@ -208,3 +208,6 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 LOGIN_URL = 'accounts/login/'
+
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
+CORS_ALLOW_CREDENTIALS = True
