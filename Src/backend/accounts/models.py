@@ -10,5 +10,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
