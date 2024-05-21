@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from dj_rest_auth.registration.views import RegisterView
 from accounts.views import CustomRegisterView, CustomLoginView  # 추가
-
+from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,5 +27,6 @@ urlpatterns = [
     # path('accounts/', include('dj_rest_auth.urls')),  # 로그인 및 로그아웃 URL
     path('mainpage/', include('mainpage.urls')),
     path('bookmark/', include('bookmark.urls')),
-
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
