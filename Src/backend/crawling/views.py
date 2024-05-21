@@ -29,7 +29,7 @@ def get_top5_news_info(sec, sid):
     sec_url = "https://news.naver.com/section/" \
               + sid \
 
-    print("section url : ", sec_url)
+    # print("section url : ", sec_url)
 
     # 해당 분야 상위 뉴스 HTML 가져오기
     soup = get_soup_obj(sec_url)
@@ -67,7 +67,7 @@ def get_news_contents(url):
         news_contents = news_contents.replace("\\", "")
 
     else:
-        print("Failed to retrieve news contents from:", url)
+        return "Failed to retrieve news contents"
     return news_contents
 
 def get_news_img(url):
@@ -77,7 +77,7 @@ def get_news_img(url):
         img_url = img_tag['data-src']
         return img_url
     else:
-        print("Failed to retrieve image from:", url)
+        # print("Failed to retrieve image from:", url)
         return "NO image"
 
 # '정치', '경제', '사회' 분야의 상위 5개 뉴스 크롤링
