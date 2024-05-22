@@ -13,9 +13,8 @@ import { BookmarkProvider } from './BookmarkContext';
 
 const App = () => {
   return (
-    
+    <BookmarkProvider>
     <BrowserRouter>
-
       <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/join" element={<Join />} />
@@ -26,8 +25,8 @@ const App = () => {
       <Route path="/economy" element={<Economy />} />
       <Route path="/society" element={<Society />} />
       </Routes>
-
     </BrowserRouter>
+    </BookmarkProvider>
   );
 };
 

@@ -65,9 +65,9 @@ export const Economy = () => {
     newsData.map(() => false)
   );
 
-  const handleBookmarkClick = (Index) => {
+  const handleBookmarkClick = (Index2) => {
     const newBookmarkedContents = {...bookmarkedContents};
-    newBookmarkedContents[Index] = !newBookmarkedContents[Index];
+    newBookmarkedContents[Index2] = !newBookmarkedContents[Index2];
     setBookmarkedContents(newBookmarkedContents);
 
     // localStorage에 저장
@@ -98,8 +98,8 @@ export const Economy = () => {
 
 
       <ContentsBox>
-        {newsData && newsData.map((news, index) => (
-          <Contents key={index}>
+        {newsData && newsData.map((news, index2) => (
+          <Contents key={index2}>
             <ContentsBox2>
               <Layout_R>
                 <ImageFrame>
@@ -114,12 +114,12 @@ export const Economy = () => {
               <Layout_L>
                 <BookmarkButton
                   src={
-                    bookmarkedContents[index]
+                    bookmarkedContents[index2]
                       ? bookmarkImage.bookmarked
                       : bookmarkImage.notBookmarked
                   }
-                  alt={bookmarkedContents[index] ? "북마크 해제" : "북마크"}
-                  onClick={() => handleBookmarkClick(index)}
+                  alt={bookmarkedContents[index2] ? "북마크 해제" : "북마크"}
+                  onClick={() => handleBookmarkClick(index2)}
                 />
                 <TitleTypo
                   size="11px"
