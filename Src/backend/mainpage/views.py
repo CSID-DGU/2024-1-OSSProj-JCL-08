@@ -102,8 +102,25 @@ def add_bookmark(request):
             news_url=request.data.get('news_url'),
             img_url=request.data.get('img_url')
         )
+        bookmark_id = bookmark.id
 
         # 성공적으로 북마크가 추가되었음을 응답
-        return Response({'message': 'Bookmark added successfully'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Bookmark added successfully', 'bookmark_id': bookmark_id}, status=status.HTTP_201_CREATED)
     else:
         return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def delete_bookmark(request):
+    if request.method == 'POST':
+        user = request.user  # 현재 사용자 정보
+        bookmark_id = request.data.get('bookmark_id')  # 삭제할 북마크의 ID
+
+        try:
+            bookmark = Bookmark.objects.get(id=bookmark_id, user=user)
+            bookmark.delete()  # 북마크 삭제
+            return Response({'message': 'Bookmark deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Bookmark.DoesNotExist:
+            return Response({'message': 'Bookmark not found'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
