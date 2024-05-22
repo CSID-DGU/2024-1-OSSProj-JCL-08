@@ -165,6 +165,11 @@ DATABASES = {
     }
 }
 
+# pymysql을 MySQLdb로 대체
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
