@@ -25,7 +25,7 @@ export const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const tokenResponse = await axios.post('http://localhost:8000/accounts/login/',
+      const tokenResponse = await axios.post('http://localhost:8000/api/token',
         {
           username: username,
           password: password,
