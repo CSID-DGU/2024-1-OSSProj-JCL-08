@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const Bookmark = () => {
-  return (
-    <div>
-        Bookmark
-    </div>
-  );
+  const { bookmarkedNews, removeBookmark } = useBookmarks();
+
+    return (
+<div> hello</div>
+    );
 };

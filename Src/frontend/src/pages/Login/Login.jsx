@@ -11,6 +11,7 @@ export const Login = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
 
   const handleUsernameChange = e => {
@@ -33,30 +34,36 @@ export const Login = () => {
           withCredentials: true,
         },
       );
-      const { token } = tokenResponse.data;
+      const { refresh, access } = tokenResponse.data; // JWT 토큰 사용 시 수정
       const currentDate = new Date().getTime();
       const expirationDate = new Date(currentDate + 60 * 60 * 1000);
-      localStorage.setItem('token', token);
+      localStorage.setItem('accessToken', access); // 수정됨
+      localStorage.setItem('refreshToken', refresh); // 수정됨
       localStorage.setItem('expirationDate', expirationDate.toString());
       console.log('로그인 성공:', tokenResponse.data);
-/*
+
       // 유저 정보 받아오기
-      const userResponse = await axios.get('/api/mypage', {
+      const userResponse = await axios.get('http://localhost:8000/accounts/', { // URL 수정 필요
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access}`, // 수정됨
         },
       });
       const user = userResponse.data;
       console.log('유저정보:', user);
-*/
+
       // 로그인 성공 후
       setIsLoggedIn(true);
-      //setUserState(user);
+      setUserState(user); // 유저 상태 업데이트
 
       navigate('/main');
-      window.location.reload();
     } catch (error) {
-      console.error('로그인 실패:', error.response.data.reason);
+      if (error.response && error.response.data) {
+        // 서버가 응답으로 오류 메시지를 보냈을 경우
+        console.error('로그인 실패:', error.response.data.reason);
+      } else {
+        // 서버 응답이 없거나 네트워크 오류 등의 다른 문제가 발생한 경우
+        console.error('로그인 실패:', error.message);
+      }
     }
   };
 
