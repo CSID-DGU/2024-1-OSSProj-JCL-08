@@ -25,7 +25,7 @@ export const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const tokenResponse = await axios.post('http://localhost:8000/api/token',
+      const tokenResponse = await axios.post('http://localhost:8000/accounts/login/',
         {
           username: username,
           password: password,
@@ -43,11 +43,11 @@ export const Login = () => {
       console.log('로그인 성공:', tokenResponse.data);
 
       // 유저 정보 받아오기
-      const userResponse = await axios.get('http://localhost:8000/accounts/', { // URL 수정 필요
+      const userResponse = { // URL 수정 필요
         headers: {
           Authorization: `Bearer ${access}`, // 수정됨
         },
-      });
+      };
       const user = userResponse.data;
       console.log('유저정보:', user);
 

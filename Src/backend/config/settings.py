@@ -97,6 +97,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -105,7 +106,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'allauth.account.middleware.AccountMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 REST_AUTH = {
    "REGISTER_SERIALIZER":"accounts.serializers.CustomRegisterSerializer",
@@ -127,6 +127,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none' # 회원가입 과정에서 이메일 인증
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # 프론트엔드 도메인
     "http://127.0.0.1:4040",
+    "http://127.0.0.1:8000",
     # 실제 배포 도메인 추가
 ]
 
@@ -221,5 +222,15 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = reverse_lazy('accounts/login/')
 
 
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000', "http://127.0.0.1:8000",)
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = True #(모든 포트 허용)
+CORS_ALLOW_METHODS = (
+"DELETE",
+"GET",
+"OPTIONS",
+"PATCH",
+"POST",
+"PUT",
+)
