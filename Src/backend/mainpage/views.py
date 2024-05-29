@@ -17,14 +17,21 @@ class PoliticsNewsAPIView(APIView):
 
         summarized_politics_news = []
         for news in politics_news:
-            # 개별 뉴스를 요약
-            summarized_news = summarize(news['news_contents'], ratio=0.15)
+            try:
+                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                if not summarized_news:
+                    summarized_news = news['news_contents']
+            except ValueError:
+                summarized_news = news['news_contents']
+
             # 요약된 뉴스 정보를 딕셔너리로 유지하고, 필요한 정보를 추가
             summarized_news_with_info = {
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
-                "img": news["img_url"]
+                "img": news["img_url"],
+                "journalist": news["journalist"],
+                "date": news["date"]
 
             }
             summarized_politics_news.append(summarized_news_with_info)
@@ -39,14 +46,21 @@ class EconomyNewsAPIView(APIView):
 
         summarized_economy_news = []
         for news in economy_news:
-            # 개별 뉴스를 요약
-            summarized_news = summarize(news['news_contents'], ratio=0.15)
+            try:
+                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                if not summarized_news:
+                    summarized_news = news['news_contents']
+            except ValueError:
+                summarized_news = news['news_contents']
+
             # 요약된 뉴스 정보를 딕셔너리로 유지하고, 필요한 정보를 추가
             summarized_news_with_info = {
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
-                "img": news["img_url"]
+                "img": news["img_url"],
+                "journalist": news["journalist"],
+                "date": news["date"]
 
             }
             summarized_economy_news.append(summarized_news_with_info)
@@ -65,14 +79,21 @@ class SocietyNewsAPIView(APIView):
 
         summarized_society_news = []
         for news in society_news:
-            # 개별 뉴스를 요약
-            summarized_news = summarize(news['news_contents'], ratio=0.15)
+            try:
+                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                if not summarized_news:
+                    summarized_news = news['news_contents']
+            except ValueError:
+                summarized_news = news['news_contents']
+
             # 요약된 뉴스 정보를 딕셔너리로 유지하고, 필요한 정보를 추가
             summarized_news_with_info = {
                 "title": news["title"],
                 "content": summarized_news,
                 "news_url": news["news_url"],
-                "img":news["img_url"]
+                "img":news["img_url"],
+                "journalist": news["journalist"],
+                "date": news["date"]
             }
             summarized_society_news.append(summarized_news_with_info)
 

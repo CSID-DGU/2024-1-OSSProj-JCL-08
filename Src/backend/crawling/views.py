@@ -70,6 +70,19 @@ def get_news_contents(url):
         return "Failed to retrieve news contents"
     return news_contents
 
+
+def get_journalist_date(url):
+    soup = get_soup_obj(url)
+    journalist_tag = soup.find('em', class_="media_end_head_journalist_name")
+    date_tag = soup.find('span', class_="media_end_head_info_datestamp_time _ARTICLE_DATE_TIME")
+
+    journalist = journalist_tag.text if journalist_tag else "Journalist not found"
+    date = date_tag.text if date_tag else "Date not found"
+
+    return journalist, date
+
+
+
 def get_news_img(url):
     soup = get_soup_obj(url)
     img_tag = soup.find('img', id="img1")
@@ -78,7 +91,7 @@ def get_news_img(url):
         return img_url
     else:
         # print("Failed to retrieve image from:", url)
-        return "NO image"
+        return "images/default_image.png"
 
 # '정치', '경제', '사회' 분야의 상위 5개 뉴스 크롤링
 def get_naver_news_top5():
@@ -99,9 +112,13 @@ def get_naver_news_top5():
             news_url = news['news_url']
             news_contents = get_news_contents(news_url)
             news_imgurl = get_news_img(news_url)
+            news_journalist,news_date = get_journalist_date(news_url)
+
             # 뉴스 정보를 저장하는 dictionary를 구성
             news['news_contents'] = news_contents
             news['img_url'] = news_imgurl
+            news['journalist'] = news_journalist
+            news['date'] = news_date
         news_dic[sec] = news_info
     return news_dic
 
