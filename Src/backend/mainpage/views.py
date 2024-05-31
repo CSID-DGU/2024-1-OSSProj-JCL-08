@@ -1,13 +1,16 @@
 # mainpage/views.py
-from gensim.summarization import summarize
 from rest_framework import permissions
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from openai_client import summarize_text
 from crawling.views import news_dic
+
+
+
+
 
 @permission_classes((permissions.AllowAny,))
 class PoliticsNewsAPIView(APIView):
@@ -18,9 +21,10 @@ class PoliticsNewsAPIView(APIView):
         summarized_politics_news = []
         for news in politics_news:
             try:
-                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                summarized_news = summarize_text(news['news_contents'])
                 if not summarized_news:
-                    summarized_news = news['news_contents']
+                    summarized_news = "실패!"#news['news_contents']
+
             except ValueError:
                 summarized_news = news['news_contents']
 
@@ -47,7 +51,7 @@ class EconomyNewsAPIView(APIView):
         summarized_economy_news = []
         for news in economy_news:
             try:
-                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                summarized_news = summarize_text(news['news_contents'])
                 if not summarized_news:
                     summarized_news = news['news_contents']
             except ValueError:
@@ -68,11 +72,9 @@ class EconomyNewsAPIView(APIView):
         # 요약된 뉴스 리스트를 클라이언트에게 반환
         return Response({"summarized_news": summarized_economy_news})
 
-# @permission_classes((permissions.AllowAny,))
 class SocietyNewsAPIView(APIView):
-    permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
-
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         # 사회 뉴스 데이터를 가져오기
         society_news = news_dic.get('soc')
@@ -80,7 +82,7 @@ class SocietyNewsAPIView(APIView):
         summarized_society_news = []
         for news in society_news:
             try:
-                summarized_news = summarize(news['news_contents'], ratio=0.15)
+                summarized_news = summarize_text(news['news_contents'])
                 if not summarized_news:
                     summarized_news = news['news_contents']
             except ValueError:

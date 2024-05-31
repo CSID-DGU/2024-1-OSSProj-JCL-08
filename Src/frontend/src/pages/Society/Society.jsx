@@ -116,18 +116,18 @@ export const Society = () => {
                   size="11px"
                   style={{ cursor: "pointer" }} // 클릭 가능한 커서 스타일 추가
                 >
-                  
+
                   {news.title}
                 </TitleTypo>
                 <ContentTypo size="8px">{news.content}</ContentTypo>
-                
+
                 <TypoWhite size="10px" top="10px">
                   이규민 기자
                 </TypoWhite>
                 <TypoWhite size="10px" top="7px">
                   2023.01.01
                 </TypoWhite>
-                
+
               </Layout_L>
             </ContentsBox2>
           </Contents>

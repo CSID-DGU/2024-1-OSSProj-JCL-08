@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import bs4.element
 import datetime
 
+from django.templatetags.static import static
 
 
 # BeautifulSoup 객체 생성
@@ -91,7 +92,7 @@ def get_news_img(url):
         return img_url
     else:
         # print("Failed to retrieve image from:", url)
-        return "images/default_image.png"
+        return static("images/default_image.png")
 
 # '정치', '경제', '사회' 분야의 상위 5개 뉴스 크롤링
 def get_naver_news_top5():
