@@ -69,24 +69,13 @@ INSTALLED_APPS = [
     "crawling"
 ]
 
-REST_USE_JWT = True #jwt 사용 여부
-JWT_AUTH_COOKIE = 'accounts-auth' # 호출할 cookie key 값
-JWT_AUTH_REFRESH_COOKIE = 'accounts-refresh-token' # refresh token cookie key 값
-# JWT_SECRET_KEY 설정 추가
-JWT_SECRET_KEY = env('JWT_SECRET_KEY')
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-}
-
-
 
 
 REST_FRAMEWORK = {
     # 토큰을 통한 인증을 기본 인증 클래스로
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ),
     # 승인된 사람이 아니면 페이지에 들어갈 수 없다
     'DEFAULT_PERMISSION_CLASSES': (
@@ -111,10 +100,7 @@ REST_AUTH = {
    "REGISTER_SERIALIZER":"accounts.serializers.CustomRegisterSerializer",
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-}
+
 
 SITE_ID = 1
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' # User 모델의 username 변경 x
@@ -129,6 +115,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:4040",
     "http://127.0.0.1:8000",
     # 실제 배포 도메인 추가
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -227,7 +218,7 @@ LOGIN_URL = reverse_lazy('accounts/login/')
 
 CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000', "http://127.0.0.1:8000",)
 CORS_ALLOW_CREDENTIALS = True
-
+CSRF_COOKIE_NAME = 'csrftoken'
 CORS_ALLOW_ALL_ORIGINS = True #(모든 포트 허용)
 CORS_ALLOW_METHODS = (
 "DELETE",
