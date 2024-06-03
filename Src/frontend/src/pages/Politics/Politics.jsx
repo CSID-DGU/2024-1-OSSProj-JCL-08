@@ -24,6 +24,7 @@ import {
   NewsImage,
 } from "./styled";
 
+
 export const Politics = () => {
   const navigate = useNavigate();
 
@@ -36,15 +37,28 @@ export const Politics = () => {
   };
 
   const [newsData, setNewsData] = useState([]);
+  const [csrfToken, setCsrfToken] = useState('');
+  const [bookmarkedContents, setBookmarkedContents] = useState([]);
 
-  // 카테고리에 따른 뉴스 데이터를 불러오는 함수
-  const fetchNewsData = async () => {
-    const response = await axios.get(
-      `http://localhost:8000/mainpage/politics/`
-    );
-    setNewsData(response.data.summarized_news);
-  };
   useEffect(() => {
+    // CSRF 토큰을 가져오는 함수
+    const fetchCsrfToken = async () => {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, 10) === 'csrftoken=') {
+            cookieValue = decodeURIComponent(cookie.substring(10));
+            break;
+          }
+        }
+      }
+      setCsrfToken(cookieValue);
+      console.log("CSRF 토큰 쿠키에서 가져옴:", cookieValue); // CSRF 토큰을 가져온 후 콘솔에 나타내기
+    };
+
+    fetchCsrfToken();
     fetchNewsData();
 
     // localStorage에서 북마크 상태 불러오기
@@ -52,27 +66,68 @@ export const Politics = () => {
     setBookmarkedContents(savedBookmarks);
   }, []);
 
+  // 카테고리에 따른 뉴스 데이터를 불러오는 함수
+  const fetchNewsData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/mainpage/politics/`
+      );
+      setNewsData(response.data.summarized_news);
+      setBookmarkedContents(new Array(response.data.summarized_news.length).fill(false));
+    } catch (error) {
+      console.error('뉴스 데이터 가져오기 실패:', error);
+    }
+  };
 
-  
-  //북마크
+  // 북마크 이미지
   const bookmarkImage = {
     bookmarked: "bookmark_on.svg",
     notBookmarked: "bookmark_off.svg",
   };
 
-  // 각 content에 대한 북마크 상태를 관리하는 배열
-  const [bookmarkedContents, setBookmarkedContents] = useState(
-    newsData.map(() => false)
-  );
-  const handleBookmarkClick = (Index) => {
-    const newBookmarkedContents = {...bookmarkedContents};
-    newBookmarkedContents[Index] = !newBookmarkedContents[Index];
+  // 북마크 추가 함수
+  const addBookmark = async (news) => {
+    console.log('addBookmark called with news:', news); // 콘솔 로그 추가
+    console.log('CSRF Token:', csrfToken);
+    try {
+      const response = await axios.post('http://localhost:8000/mainpage/add_bookmark/',
+        {
+          title: news.title,
+          content: news.content,
+          news_url: news.news_url,
+          img_url: news.img,
+        },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log('북마크 추가 성공:', response.data);
+    } catch (error) {
+      console.error('북마크 추가 실패:', error);
+    }
+  };
+
+  // 북마크 토글 함수
+  const handleBookmarkClick = (index) => {
+    console.log('handleBookmarkClick called with index:', index); // 콘솔 로그 추가
+    const newBookmarkedContents = [...bookmarkedContents];
+    newBookmarkedContents[index] = !newBookmarkedContents[index];
     setBookmarkedContents(newBookmarkedContents);
+
+    console.log('Bookmark Clicked:', newBookmarkedContents); // 콘솔 로그 추가
+
+    // 북마크 추가 요청 보내기
+    if (newBookmarkedContents[index]) {
+      addBookmark(newsData[index]);
+    }
 
     // localStorage에 저장
     localStorage.setItem("bookmarks", JSON.stringify(newBookmarkedContents));
   };
-  
+
   return (
     <Root>
 
@@ -112,16 +167,15 @@ export const Politics = () => {
                   <a href={news.news_url}>원문 보기 </a>
                 </Layout_R>
                 <Layout_L>
-     <BookmarkButton
-     src={
-       bookmarkedContents[index]
-         ? bookmarkImage.bookmarked
-         : bookmarkImage.notBookmarked
-     }
-     alt={bookmarkedContents[index] ? "북마크 해제" : "북마크"}
-     onClick={() => handleBookmarkClick(index)}
-   />
-
+                  <BookmarkButton
+                    src={
+                      bookmarkedContents[index]
+                        ? bookmarkImage.bookmarked
+                        : bookmarkImage.notBookmarked
+                    }
+                    alt={bookmarkedContents[index] ? "북마크 해제" : "북마크"}
+                    onClick={() => handleBookmarkClick(index)}
+                  />
                   <TitleTypo
                     size="11px"
                     style={{ cursor: "pointer" }} // 클릭 가능한 커서 스타일 추가
