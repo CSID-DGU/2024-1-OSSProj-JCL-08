@@ -5,12 +5,24 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 WORKDIR /app/backend
 
-COPY requirements.txt /app/backend/
+# 필수 종속성 설치
+RUN apk add --no-cache --virtual .build-deps \
+    build-base \
+    gcc \
+    musl-dev \
+    gfortran \
+    libffi-dev \
+    openblas-dev \
+    && apk add --no-cache \
+    libstdc++ \
+    openblas
 
-RUN apt-get update && apt-get install -y \
-    python3-dev \
-    default-libmysqlclient-dev \
-    build-essential
+# numpy와 scipy를 먼저 설치합니다.
+RUN pip install --no-cache-dir numpy scipy
+
+# requirements.txt에 나머지 종속성 설치
+COPY requirements.txt /app/backend/
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/backend/
 
