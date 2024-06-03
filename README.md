@@ -38,15 +38,14 @@
 
 ## 📱 화면 설계
 
-<p float="left>
-    
-<img src="Doc\images\onboarding.png" width="250" height="400">
-<img src="Doc\images\signup.png" width="250" height="400">
-<img src="Doc\images\main.png" width="250" height="400">
-    
-</p>
-<br>
+<div style="display: flex; justify-content: center; gap: 40px;">
+  <img src="Doc/images/onboarding.png" width="200" height="400">
+  <img src="Doc/images/signup.png" width="200" height="400">
+  <img src="Doc/images/main.png" width="200" height="400">
+</div>
 
+<br>
+    
 ## 🐱 기존 시스템과의 차별점 및 개선점
 
 네이버 뉴스와 비교
@@ -125,10 +124,10 @@
 
 ## 이슈 관리
 
-<img src="Doc\images\이슈관리1.png" width="600" height="300">  
+<img src="Doc\images\이슈관리1.png" width="700" height="300">  
 https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/issues
 
-<br>
+<br></br>
 
 ## 기대효과 및 활용방안
 
