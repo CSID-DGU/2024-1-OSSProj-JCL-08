@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useRecoilValue } from 'recoil';
+import { UserState } from '../../stores/login-store';
 import {
   Typo,
   CategoryBox,
@@ -21,7 +22,8 @@ import {
   NewsImage
 } from "./styled";
 
-export const Society = () => {
+
+export const Society = ({ accessToken }) => { // accessToken을 props로 전달받음
   const navigate = useNavigate();
 
   //카테고리 선택 버튼
@@ -36,18 +38,31 @@ export const Society = () => {
   const [newsData, setNewsData] = useState([]);
 
   // 카테고리에 따른 뉴스 데이터를 불러오는 함수
-  const fetchNewsData = async (category) => {
-    const response = await axios.get(
-      `http://localhost:8000/mainpage/society/`
-    );
-    setNewsData(response.data.summarized_news);
-  };
+  useEffect(() => {
+    const fetchNewsData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/mainpage/society/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setNewsData(response.data.summarized_news);
+      } catch (error) {
+        console.error("Error fetching news data:", error);
+      }
+    };
 
+    fetchNewsData();
+  }, [selectedCategory, accessToken]); // accessToken을 의존성 배열에 추가
+/*
   // selectedCategory가 변경될 때마다 fetchNewsData 함수를 호출
   useEffect(() => {
     fetchNewsData(selectedCategory);
   }, [selectedCategory]);
-
+*/
 
   //북마크
   const bookmarkImage = {

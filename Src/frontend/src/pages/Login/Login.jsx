@@ -3,7 +3,7 @@ import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { LoginState, UserState } from '../../stores/login-store';
 import { useSetRecoilState } from 'recoil';
-import axios from 'axios';
+import axios from '../../utils/axios'; 
 
 export const Login = () => {
   const setIsLoggedIn = useSetRecoilState(LoginState);
@@ -22,48 +22,28 @@ export const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const tokenResponse = await axios.post('http://localhost:8000/accounts/login/',
+      const response = await axios.post('http://localhost:8000/accounts/login/', 
         {
           username: username,
           password: password,
         },
         {
           withCredentials: true,
-        },
+        }
       );
-      const { refresh, access } = tokenResponse.data; // JWT 토큰 사용 시 수정
-      const currentDate = new Date().getTime();
-      const expirationDate = new Date(currentDate + 60 * 60 * 1000);
-      localStorage.setItem('accessToken', access); // 수정됨
-      localStorage.setItem('refreshToken', refresh); // 수정됨
-      localStorage.setItem('expirationDate', expirationDate.toString());
-      console.log('로그인 성공:', tokenResponse.data);
+      // 서버로부터 받은 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('refresh_token', response.data.refresh);
 
-      // 유저 정보 받아오기
-      const userResponse = { // URL 수정 필요
-        headers: {
-          Authorization: `Bearer ${access}`, // 수정됨
-        },
-      };
-      const user = userResponse.data;
-      console.log('유저정보:', user);
+      console.log('로그인 성공:', response.data);
+      navigate('/politics');
 
-      // 로그인 성공 후
-      setIsLoggedIn(true);
-      setUserState(user); // 유저 상태 업데이트
-
-      navigate('/main');
+      // 로그인 성공 후 처리
     } catch (error) {
-      if (error.response && error.response.data) {
-        // 서버가 응답으로 오류 메시지를 보냈을 경우
-        console.error('로그인 실패:', error.response.data.reason);
-      } else {
-        // 서버 응답이 없거나 네트워크 오류 등의 다른 문제가 발생한 경우
-        console.error('로그인 실패:', error.message);
-      }
+      console.error(error);
     }
   };
 
@@ -71,7 +51,7 @@ export const Login = () => {
     <div className={styles.container}>
       <img className={styles.image} src="logo.png" alt="로고" />
       <div className={styles.subcontainer}>
-        <form className={styles.form}>
+        <form className={styles.form}  onSubmit={handleSubmit}>
           <div className={styles.wrapper}>
             <input
               type="username"
@@ -93,7 +73,6 @@ export const Login = () => {
           <button
             className={styles.login_button}
             type="submit"
-            onClick={handleLogin}
           >
             Login
           </button>

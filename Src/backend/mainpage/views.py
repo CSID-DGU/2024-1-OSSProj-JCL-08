@@ -54,7 +54,7 @@ class EconomyNewsAPIView(APIView):
         # 요약된 뉴스 리스트를 클라이언트에게 반환
         return Response({"summarized_news": summarized_economy_news})
 
-# @permission_classes((permissions.AllowAny,))
+@permission_classes((permissions.AllowAny,))
 class SocietyNewsAPIView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]

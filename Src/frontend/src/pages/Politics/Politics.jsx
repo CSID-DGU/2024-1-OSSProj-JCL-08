@@ -29,13 +29,13 @@ export const Politics = () => {
 
   //카테고리 선택 버튼
   const [selectedButton, setSelectedButton] = useState("all");
+  const [newsData, setNewsData] = useState([]);
+  const [bookmarkedContents, setBookmarkedContents] = useState({});
 
   const handleButtonClick = (category) => {
     setSelectedButton(category);
     console.log("Selected Category:", category);
   };
-
-  const [newsData, setNewsData] = useState([]);
 
   // 카테고리에 따른 뉴스 데이터를 불러오는 함수
   const fetchNewsData = async () => {
@@ -46,33 +46,63 @@ export const Politics = () => {
   };
   useEffect(() => {
     fetchNewsData();
-
-    // localStorage에서 북마크 상태 불러오기
-    const savedBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || {};
-    setBookmarkedContents(savedBookmarks);
   }, []);
-
-
   
+  // 북마크 추가 함수
+  const addBookmark = async (news) => {
+    try {
+      const response = await axios.post('http://localhost:8000/mainpage/add_bookmark/', {
+        title: news.title,
+        content: news.content,
+        news_url: news.news_url,
+        img_url: news.img
+      });
+      console.log(response.data.message);
+      return response.data.bookmark_id;
+    } catch (error) {
+      console.error('Error adding bookmark:', error);
+    }
+  };
+
+  // 북마크 삭제 함수
+  const deleteBookmark = async (bookmarkId) => {
+    try {
+      const response = await axios.post('http://localhost:8000/mainpage/delete_bookmark/', {
+        bookmark_id: bookmarkId
+      });
+      console.log(response.data.message);
+    } catch (error) {
+      console.error('Error deleting bookmark:', error);
+    }
+  };
+
+  // 북마크 버튼 클릭 핸들러
+  const handleBookmarkClick = async (index) => {
+    const news = newsData[index];
+    if (bookmarkedContents[index]) {
+      // 북마크 해제
+      await deleteBookmark(bookmarkedContents[index]);
+      setBookmarkedContents((prev) => {
+        const newBookmarkedContents = { ...prev };
+        delete newBookmarkedContents[index];
+        return newBookmarkedContents;
+      });
+    } else {
+      // 북마크 추가
+      const bookmarkId = await addBookmark(news);
+      setBookmarkedContents((prev) => ({
+        ...prev,
+        [index]: bookmarkId
+      }));
+    }
+  };
+
   //북마크
   const bookmarkImage = {
     bookmarked: "bookmark_on.svg",
     notBookmarked: "bookmark_off.svg",
   };
 
-  // 각 content에 대한 북마크 상태를 관리하는 배열
-  const [bookmarkedContents, setBookmarkedContents] = useState(
-    newsData.map(() => false)
-  );
-  const handleBookmarkClick = (Index) => {
-    const newBookmarkedContents = {...bookmarkedContents};
-    newBookmarkedContents[Index] = !newBookmarkedContents[Index];
-    setBookmarkedContents(newBookmarkedContents);
-
-    // localStorage에 저장
-    localStorage.setItem("bookmarks", JSON.stringify(newBookmarkedContents));
-  };
-  
   return (
     <Root>
 
@@ -120,7 +150,7 @@ export const Politics = () => {
      }
      alt={bookmarkedContents[index] ? "북마크 해제" : "북마크"}
      onClick={() => handleBookmarkClick(index)}
-   />
+     />
 
                   <TitleTypo
                     size="11px"

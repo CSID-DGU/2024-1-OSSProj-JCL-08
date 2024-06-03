@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Join.module.css';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
+import axios from '../../utils/axios'; 
 
 
 export const Join = () => {
