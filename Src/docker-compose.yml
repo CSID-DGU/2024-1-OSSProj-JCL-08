@@ -28,5 +28,3 @@ services:
 
     volumes:
       - ./backend:/app/backend
-
-    depends_on:

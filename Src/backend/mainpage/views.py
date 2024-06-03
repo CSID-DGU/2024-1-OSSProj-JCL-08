@@ -10,8 +10,6 @@ from crawling.views import news_dic
 
 
 
-
-
 @permission_classes((permissions.AllowAny,))
 class PoliticsNewsAPIView(APIView):
     def get(self, request):
