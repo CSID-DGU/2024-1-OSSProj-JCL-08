@@ -44,11 +44,7 @@ export const Login = () => {
     event.preventDefault();
 
     try {
-<<<<<<< HEAD
-      const response = await axios.post('http://localhost:8000/accounts/login/', 
-=======
       const loginResponse = await axios.post('http://localhost:8000/accounts/login/',
->>>>>>> eb33fa5b7e1e840f0d12ba66f711965b3a3f076c
         {
           username: username,
           password: password,
@@ -60,16 +56,6 @@ export const Login = () => {
           withCredentials: true,
         }
       );
-<<<<<<< HEAD
-      // 서버로부터 받은 토큰을 로컬 스토리지에 저장
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
-
-      console.log('로그인 성공:', response.data);
-      navigate('/politics');
-
-      // 로그인 성공 후 처리
-=======
       console.log('로그인 성공:', loginResponse.data);
       // 로그인 성공 후 CSRF 토큰을 콘솔에 출력
       console.log('CSRF 토큰:', csrfToken);
@@ -78,7 +64,6 @@ export const Login = () => {
       // 로그인 성공 후
       setIsLoggedIn(true);
       navigate('/main');
->>>>>>> eb33fa5b7e1e840f0d12ba66f711965b3a3f076c
     } catch (error) {
       console.error(error);
     }
