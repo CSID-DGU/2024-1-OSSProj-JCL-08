@@ -3,7 +3,7 @@ from rest_framework import permissions
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 from openai_client import summarize_text
 from crawling.views import news_dic
@@ -71,10 +71,9 @@ class EconomyNewsAPIView(APIView):
 
         # 요약된 뉴스 리스트를 클라이언트에게 반환
         return Response({"summarized_news": summarized_economy_news})
-
+@permission_classes((permissions.AllowAny,))
 class SocietyNewsAPIView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         # 사회 뉴스 데이터를 가져오기
         society_news = news_dic.get('soc')
@@ -113,9 +112,12 @@ from rest_framework import status
 from bookmark.models import Bookmark  # 북마크 모델 import
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def add_bookmark(request):
     if request.method == 'POST':
         user = request.user  # 현재 사용자 정보
+        if not user.is_authenticated:
+            return Response({'message': 'User is not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
 
         # 북마크를 생성하고 데이터베이스에 저장
         bookmark = Bookmark.objects.create(
@@ -133,6 +135,7 @@ def add_bookmark(request):
         return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
 def delete_bookmark(request):
     if request.method == 'POST':
         user = request.user  # 현재 사용자 정보

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { LoginState, UserState } from '../../stores/login-store';
@@ -11,8 +11,6 @@ export const Login = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
-
 
   const navigate = useNavigate();
 
@@ -23,46 +21,40 @@ export const Login = () => {
   const handlePasswordChange = e => {
     setPassword(e.target.value);
   };
-  useEffect(() => {
-    // CSRF 토큰을 가져오는 함수
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/accounts/csrf/', {
-          withCredentials: true,
-        });
-        setCsrfToken(response.data.csrftoken);
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
-
-    fetchCsrfToken();
-  }, []);
-
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
     try {
-      const loginResponse = await axios.post('http://localhost:8000/accounts/login/',
+      const tokenResponse = await axios.post('http://localhost:8000/accounts/login/',
         {
           username: username,
           password: password,
         },
         {
-          headers: {
-            'X-CSRFToken': csrfToken,
-          },
           withCredentials: true,
         },
       );
-      console.log('로그인 성공:', loginResponse.data);
-      // 로그인 성공 후 CSRF 토큰을 콘솔에 출력
-      console.log('CSRF 토큰:', csrfToken);
+      const { refresh, access } = tokenResponse.data; // JWT 토큰 사용 시 수정
+      const currentDate = new Date().getTime();
+      const expirationDate = new Date(currentDate + 60 * 60 * 1000);
+      localStorage.setItem('accessToken', access); // 수정됨
+      localStorage.setItem('refreshToken', refresh); // 수정됨
+      localStorage.setItem('expirationDate', expirationDate.toString());
+      console.log('로그인 성공:', tokenResponse.data);
 
+      // 유저 정보 받아오기
+      const userResponse = { // URL 수정 필요
+        headers: {
+          Authorization: `Bearer ${access}`, // 수정됨
+        },
+      };
+      const user = userResponse.data;
+      console.log('유저정보:', user);
 
       // 로그인 성공 후
       setIsLoggedIn(true);
+      setUserState(user); // 유저 상태 업데이트
+
       navigate('/main');
     } catch (error) {
       if (error.response && error.response.data) {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useRecoilValue } from 'recoil';
-import { UserState } from '../../stores/login-store';
+
 import {
   Typo,
   CategoryBox,
@@ -22,8 +21,7 @@ import {
   NewsImage
 } from "./styled";
 
-
-export const Society = ({ accessToken }) => { // accessToken을 props로 전달받음
+export const Society = () => {
   const navigate = useNavigate();
 
   //카테고리 선택 버튼
@@ -33,59 +31,92 @@ export const Society = ({ accessToken }) => { // accessToken을 props로 전달�
     setSelectedButton(category);
     console.log("Selected Category:", category);
   };
-  
+
   const [selectedCategory, setSelectedCategory] = useState(); // 기본값은 '정치'
   const [newsData, setNewsData] = useState([]);
+  const [csrfToken, setCsrfToken] = useState('');
+  const [bookmarkedContents, setBookmarkedContents] = useState([]); // 추가된 부분
 
-  // 카테고리에 따른 뉴스 데이터를 불러오는 함수
   useEffect(() => {
-    const fetchNewsData = async () => {
+    // CSRF 토큰을 가져오는 함수
+    const fetchCsrfToken = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/mainpage/society/`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        setNewsData(response.data.summarized_news);
+        const response = await axios.get('http://localhost:8000/csrf/', {
+          withCredentials: true,
+        });
+        setCsrfToken(response.data.csrftoken);
       } catch (error) {
-        console.error("Error fetching news data:", error);
+        console.error('Error fetching CSRF token:', error);
       }
     };
 
-    fetchNewsData();
-  }, [selectedCategory, accessToken]); // accessToken을 의존성 배열에 추가
-/*
-  // selectedCategory가 변경될 때마다 fetchNewsData 함수를 호출
-  useEffect(() => {
-    fetchNewsData(selectedCategory);
-  }, [selectedCategory]);
-*/
+    fetchCsrfToken();
+    fetchNewsData(); // 초기 로드 시 뉴스 데이터를 가져옴
+  }, []);
 
-  //북마크
-  const bookmarkImage = {
-    bookmarked: "bookmark_on.svg",
-    notBookmarked: "bookmark_off.svg",
+  // 카테고리에 따른 뉴스 데이터를 불러오는 함수
+  const fetchNewsData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/mainpage/society/`,
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+          },
+          withCredentials: true,
+        }
+      );
+      setNewsData(response.data.summarized_news);
+      setBookmarkedContents(new Array(response.data.summarized_news.length).fill(false)); // 추가된 부분
+    } catch (error) {
+      console.error('뉴스 데이터 가져오기 실패:', error);
+    }
   };
 
-  // 각 content에 대한 북마크 상태를 관리하는 배열
-  const [bookmarkedContents, setBookmarkedContents] = useState(
-    newsData.map(() => false)
-  );
+  // 북마크 추가 함수
+  const addBookmark = async (news) => {
+    console.log('CSRF Token:', csrfToken);
+    console.log('News:', news);
+    try {
+      const response = await axios.post('http://localhost:8000/mainpage/add_bookmark/',
+        {
+          title: news.title,
+          content: news.content,
+          news_url: news.news_url,
+          img_url: news.img,
+        },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log('북마크 추가 성공:', response.data);
+    } catch (error) {
+      console.error('북마크 추가 실패:', error);
+    }
+  };
 
   // 북마크 토글 함수
   const handleBookmarkClick = (index) => {
     const newBookmarkedContents = [...bookmarkedContents];
     newBookmarkedContents[index] = !newBookmarkedContents[index];
     setBookmarkedContents(newBookmarkedContents);
+
+    console.log('Bookmark Clicked:', newBookmarkedContents); // 콘솔 로그 추가
+
+    // 북마크 추가 요청 보내기
+    if (newBookmarkedContents[index]) {
+      console.log('Adding bookmark for news:', newsData[index]); // 추가된 부분
+      addBookmark(newsData[index]);
+    }
   };
+
   return (
     <Root>
       <TypoContainer>
-        <Typo size="48px" color="#1D24CA"
->요약 뉴스</Typo>
+        <Typo size="48px" color="#1D24CA">요약 뉴스</Typo>
       </TypoContainer>
 
       <CategoryBox>
@@ -111,11 +142,8 @@ export const Society = ({ accessToken }) => { // accessToken을 props로 전달�
                 <ImageFrame>
                   <NewsImage src={news.img} />
                 </ImageFrame>
-                <TypoWhite size="10px" top="10px">
-                  KBS 뉴스
-                </TypoWhite>
-                <a href={news.news_url}>
-원문 보기    </a>
+                <TypoWhite size="10px" top="10px">KBS 뉴스</TypoWhite>
+                <a href={news.news_url}>원문 보기</a>
               </Layout_R>
               <Layout_L>
                 <BookmarkButton
@@ -127,22 +155,12 @@ export const Society = ({ accessToken }) => { // accessToken을 props로 전달�
                   alt={bookmarkedContents[index] ? "북마크 해제" : "북마크"}
                   onClick={() => handleBookmarkClick(index)}
                 />
-                <TitleTypo
-                  size="11px"
-                  style={{ cursor: "pointer" }} // 클릭 가능한 커서 스타일 추가
-                >
-
+                <TitleTypo size="11px" style={{ cursor: "pointer" }}>
                   {news.title}
                 </TitleTypo>
                 <ContentTypo size="8px">{news.content}</ContentTypo>
-
-                <TypoWhite size="10px" top="10px">
-                  이규민 기자
-                </TypoWhite>
-                <TypoWhite size="10px" top="7px">
-                  2023.01.01
-                </TypoWhite>
-
+                <TypoWhite size="10px" top="10px">이규민 기자</TypoWhite>
+                <TypoWhite size="10px" top="7px">2023.01.01</TypoWhite>
               </Layout_L>
             </ContentsBox2>
           </Contents>
