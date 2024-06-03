@@ -44,27 +44,25 @@ class CustomRegisterSerializer(RegisterSerializer):
         setup_user_email(request, user, [])
         return user
 
-class TokenSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
-    access = serializers.CharField()
+
 
 class CustomLoginSerializer(LoginSerializer):
     username = serializers.CharField(max_length=150, required=True)
     password = serializers.CharField(style={'input_type': 'password'},required=True, write_only=True)
     def validate(self, attrs):
-        data = super().validate(attrs)
+        username = attrs.get('username')
+        password = attrs.get('password')
 
-        # 사용자 정보를 가져옵니다.
-        user = authenticate(username=attrs['username'], password=attrs['password'])
+        if username and password:
+            user = authenticate(request=self.context.get('request'), username=username, password=password)
 
-        if user:
-            self.user = user
+            if user:
+                if not user.is_active:
+                    raise serializers.ValidationError('User account is disabled.')
+            else:
+                raise serializers.ValidationError('Unable to log in with provided credentials.')
         else:
-            raise serializers.ValidationError('Invalid login credentials')
-        # JWT 토큰을 생성합니다.
-        refresh = RefreshToken.for_user(user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+            raise serializers.ValidationError('Must include "username" and "password".')
 
-        data['user'] = user
-        return data
+        attrs['user'] = user
+        return attrs

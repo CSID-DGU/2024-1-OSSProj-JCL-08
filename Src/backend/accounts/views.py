@@ -1,10 +1,14 @@
 from dj_rest_auth.views import LoginView
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from .serializers import CustomRegisterSerializer, CustomLoginSerializer
 from dj_rest_auth.registration.views import RegisterView
@@ -26,22 +30,14 @@ class CustomRegisterView(RegisterView):
         serializer.is_valid(raise_exception=True)
         user = self.perform_create(serializer)
 
-        refresh = RefreshToken.for_user(user)
-
-        token_data = {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
 
         return Response({
             'user': CustomRegisterSerializer(user, context=self.get_serializer_context()).data,
-            'token': token_data
+            'message': "회원가입 성공"
         }, status=status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
         return serializer.save(self.request)
-
-
 
 @permission_classes((permissions.AllowAny,))
 class CustomLoginView(LoginView):
@@ -52,14 +48,14 @@ class CustomLoginView(LoginView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.validated_data['user']
-        refresh = RefreshToken.for_user(user)
-
-        token_data = {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
+        login(request, user)
 
         return Response({
             'user': CustomLoginSerializer(user, context=self.get_serializer_context()).data,
-            'token': token_data
+            'message': '로그인 성공'
         }, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_csrf_token(request):
+    token = get_token(request)
+    return JsonResponse({'csrftoken': token})
