@@ -113,6 +113,12 @@ export const Society = () => {
     }
   };
 
+    // 북마크 이미지
+    const bookmarkImage = {
+      bookmarked: "bookmark_on.svg",
+      notBookmarked: "bookmark_off.svg",
+    };
+
   return (
     <Root>
       <TypoContainer>
