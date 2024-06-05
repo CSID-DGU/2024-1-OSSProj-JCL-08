@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.10-buster
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -6,16 +6,15 @@ ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /app/backend
 
 # 필수 종속성 설치
-RUN apk add --no-cache --virtual .build-deps \
-    build-base \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
     gcc \
-    musl-dev \
     gfortran \
     libffi-dev \
-    openblas-dev \
-    && apk add --no-cache \
-    libstdc++ \
-    openblas
+    libopenblas-dev \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # numpy와 scipy를 먼저 설치합니다.
 RUN pip install --no-cache-dir numpy scipy
