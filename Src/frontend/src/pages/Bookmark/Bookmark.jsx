@@ -19,33 +19,73 @@ import {
 } from './styled'; // styled 컴포넌트 경로에 맞게 조정하세요.
 
 export const Bookmark = () => {
+  const [csrfToken, setCsrfToken] = useState('');
   const [bookmarkedNews, setBookmarkedNews] = useState([]);
 
-  // 북마크한 뉴스 데이터를 불러오는 함수
-  const fetchBookmarkedNews = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/bookmark/myarticles/');
-      setBookmarkedNews(response.data.bookmarks);
-    } catch (error) {
-      console.error('Error fetching bookmarked news:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchBookmarkedNews();
+    const fetchCsrfToken = async () => {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, 10) === 'csrftoken=') {
+            cookieValue = decodeURIComponent(cookie.substring(10));
+            break;
+          }
+        }
+      }
+      setCsrfToken(cookieValue);
+      console.log("CSRF 토큰 쿠키에서 가져옴:", cookieValue);
+    };
+
+    fetchCsrfToken();
   }, []);
 
-  // 북마크 삭제 함수
-  const deleteBookmark = async (bookmarkId, index) => {
+  useEffect(() => {
+    if (csrfToken) {
+      const fetchBookmarkedNews = async () => {
+        try {
+          const response = await axios.get('http://localhost:8000/bookmark/myarticles/', {
+            headers: {
+              'X-CSRFToken': csrfToken,
+            },
+            withCredentials: true,
+          });
+          setBookmarkedNews(response.data);
+        } catch (error) {
+          console.error('Error fetching bookmarked news:', error);
+        }
+      };
+
+      fetchBookmarkedNews();
+    }
+  }, [csrfToken]);
+  
+  const deleteBookmark = async (bookmark_id) => {
+    console.log('CSRF Token:', csrfToken);
     try {
-      await axios.post('http://localhost:8000/mainpage/delete_bookmark/', {
-        bookmark_id: bookmarkId,
+      const response = await axios.post('http://localhost:8000/mainpage/delete_bookmark/', 
+        {bookmark_id: bookmark_id},
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+            //'Content-Type': 'application/json'
+          },
+          withCredentials: true,
       });
-      // 성공적으로 삭제했다면 클라이언트 상의 목록도 업데이트
-      setBookmarkedNews((prev) => prev.filter((_, i) => i !== index));
+      console.log('북마크 삭제 성공:', response.data);
+      setBookmarkedNews((prev) => prev.filter((bookmark) => bookmark.id !== bookmark_id));
     } catch (error) {
       console.error('Error deleting bookmark:', error);
     }
+  };
+
+  
+
+  const handleBookmarkClick = (bookmark_id) => {
+    console.log('handleBookmarkClick called with bookmarkId:', bookmark_id);
+    deleteBookmark(bookmark_id);
   };
 
   return (
@@ -57,25 +97,25 @@ export const Bookmark = () => {
       </TypoContainer>
 
       <ContentsBox>
-        {bookmarkedNews.map((news, index) => (
-          <Contents key={index}>
+        {bookmarkedNews.map((bookmark,bookmark_id) => (
+          <Contents key={bookmark_id}>
             <ContentsBox2>
               <Layout_R>
                 <ImageFrame>
-                  <NewsImage src={news.img_url} />
+                  <NewsImage src={bookmark.img_url} />
                 </ImageFrame>
-                <a href={news.news_url}>원문 보기 </a>
+                <a href={bookmark.news_url}>원문 보기 </a>
               </Layout_R>
               <Layout_L>
                 <BookmarkButton
-                  src="bookmark_on.svg" // 북마크 해제 이미지로 가정
+                  src="bookmark_on.svg"
                   alt="북마크 해제"
-                  onClick={() => deleteBookmark(news.bookmark_id, index)}
+                  onClick={() => deleteBookmark(bookmark_id)}
                 />
                 <TitleTypo size="11px" style={{ cursor: 'pointer' }}>
-                  {news.title}
+                  {bookmark.title}
                 </TitleTypo>
-                <ContentTypo size="8px">{news.content}</ContentTypo>
+                <ContentTypo size="8px">{bookmark.content}</ContentTypo>
               </Layout_L>
             </ContentsBox2>
           </Contents>
