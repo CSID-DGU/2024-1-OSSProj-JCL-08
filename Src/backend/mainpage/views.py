@@ -133,7 +133,7 @@ def add_bookmark(request):
         return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@permission_classes((permissions.AllowAny,))
+@permission_classes([IsAuthenticated])
 def delete_bookmark(request):
     if request.method == 'POST':
         user = request.user  # 현재 사용자 정보
