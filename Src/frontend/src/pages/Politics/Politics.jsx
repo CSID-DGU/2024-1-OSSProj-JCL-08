@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BookmarkProvider } from '../../BookmarkContext';
-import { useBookmarks } from '../../BookmarkContext';
+import DefaultImage from './Icon.png'; // 기본 이미지 경로
 
 import {
   Typo,
@@ -96,6 +95,8 @@ export const Politics = () => {
           content: news.content,
           news_url: news.news_url,
           img_url: news.img,
+          journalist: news.journalist,
+          date: news.date,
         },
         {
           headers: {
@@ -128,6 +129,17 @@ export const Politics = () => {
     localStorage.setItem("bookmarks", JSON.stringify(newBookmarkedContents));
   };
 
+/*
+  const NewsImage = ({ src }) => {
+    const handleImageError = (e) => {
+      e.target.src = DefaultImage;
+    };
+  
+    return (
+      <img src={src} onError={handleImageError} alt="News" />
+    );
+  };
+*/
   return (
     <Root>
 
@@ -161,9 +173,6 @@ export const Politics = () => {
                   <ImageFrame>
                     <NewsImage src={news.img} />
                   </ImageFrame>
-                  <TypoWhite size="10px" top="10px">
-                    KBS 뉴스
-                  </TypoWhite>
                   <a href={news.news_url}>원문 보기 </a>
                 </Layout_R>
                 <Layout_L>
@@ -185,11 +194,10 @@ export const Politics = () => {
                   <ContentTypo size="8px">{news.content}</ContentTypo>
 
                   <TypoWhite size="10px" top="10px">
-                    이규민 기자
+                  {news.journalist} 
                   </TypoWhite>
                   <TypoWhite size="10px" top="7px">
-                    2023.01.01
-                  </TypoWhite>
+{news.date}                  </TypoWhite>
                 </Layout_L>
               </ContentsBox2>
             </Contents>
