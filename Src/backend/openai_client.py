@@ -4,7 +4,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 # .env 파일을 로드합니다.
-load_dotenv()
+load_dotenv('./.env')
 
 
 client = OpenAI(

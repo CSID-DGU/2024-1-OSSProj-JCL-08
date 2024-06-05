@@ -26,7 +26,7 @@ urlpatterns = [
     path("accounts/", include('accounts.urls')),
     # path('accounts/', include('dj_rest_auth.urls')),  # 로그인 및 로그아웃 URL
     path('mainpage/', include('mainpage.urls')),
-    path('bookmark/', include('bookmark.urls')),
+    path('bookmark/', include('bookmark.urls')),  # 북마크 관련 URL
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue } from 'recoil';
+import { UserState } from '../../stores/login-store';
 
 import {
   Typo,
@@ -47,6 +49,9 @@ export const Main = () => {
   useEffect(() => {
     fetchNewsData(selectedCategory);
   }, [selectedCategory]);
+
+
+
 
 
   //북마크

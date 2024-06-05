@@ -14,6 +14,8 @@ export const UserState = atom({
   default: {
     username: '',
     email: '',
+    accessToken: '',
+    refreshToken: '',
   },
   effects_UNSTABLE: [persistAtom],
 });
