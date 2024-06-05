@@ -37,13 +37,15 @@
 <img src="Doc\images\블록다이어그램.png" width="600" height="400"> <br>
 
 ## 📱 화면 설계
+### 로그인 & 회원가입 
+  <img src="Doc/images/sign in_sign up.png" width="700" height="400">
 
-<div style="display: flex; justify-content: center; gap: 40px;">
-  <img src="Doc/images/onboarding.png" width="200" height="400">
-  <img src="Doc/images/signup.png" width="200" height="400">
-  <img src="Doc/images/main.png" width="200" height="400">
-</div>
+### 온보딩
+  <img src="Doc/images/onboarding_group.png" width="700" height="400">
 
+### 메인페이지 & 북마크
+  <img src="Doc/images/news_bookmark.png" width="700" height="400">
+    
 <br>
     
 ## 🐱 기존 시스템과의 차별점 및 개선점
@@ -105,7 +107,7 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white"/>
 </div> <br>
 
-### Datebase
+### Database
 
 <div>
     <img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=AmazonRDS&logoColor=white">   
@@ -128,6 +130,15 @@
 https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/issues
 
 <br></br>
+
+## 참고 프로젝트
+  [2022-2-OSSProj-KKJ-5 : URL 요약 정리 및 공유 웹 사이트](https://github.com/CSID-DGU/2022-2-OSSProj-KKJ-5.git)  
+ <br> 
+
+## 수행 계획서 & 중간보고서
+📜[수행 계획서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/)  
+📜[중간보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)  
+<br>  
 
 ## 기대효과 및 활용방안
 
