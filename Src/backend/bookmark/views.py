@@ -1,12 +1,14 @@
 # bookmark/views.py
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from bookmark.models import Bookmark
 from bookmark.serializers import BookmarkSerializer
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_bookmarks(request):
     user = request.user  # 현재 사용자 정보
 

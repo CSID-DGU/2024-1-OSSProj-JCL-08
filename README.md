@@ -5,6 +5,7 @@
 <br>
 
 ## 👨🏼‍💻 프로젝트 소개
+  <img src="Doc/images/news_bookmark.png" width="700" height="400">
 
 - 매일 쏟아지는 뉴스 속에서 중요한 내용만을 빠르게 제공해줍니다.
 - AI 기술을 활용한 정확한 요약으로, 매일 필요한 정보를 간편하게 받을 수 있습니다.
@@ -16,35 +17,19 @@
     
 | <img src="https://avatars.githubusercontent.com/u/162105423?v=4" width="160"> | <img src="https://avatars.githubusercontent.com/u/162091845?v=4" width="160"> | <img src="https://avatars.githubusercontent.com/u/43908014?v=4" width="160"> |
 | :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-|                    [이규민](https://github.com/kyumin0903)                    |                   [정영균](https://github.com/okchangheeok)                   |                    [최지안](https://github.com/choijian)                     |
+|                    [이규민](https://github.com/kyumin0903)                    |                   [정영균](https://github.com/YK-Jeong-git)                   |                    [최지안](https://github.com/choijian)                     |
 |                               팀장, 프론트엔드                                |                                    백엔드                                     |                                디자인, 인프라                                |
 </div>
 <br>
 
-## 📜 커밋 규칙
+## 📜 유즈케이스
 
-- feat : 새로운 기능에 대한 커밋
-- fix : 버그 수정에 대한 커밋
-- build : 빌드 관련 파일 수정에 대한 커밋
-- chore : 그 외 자잘한 수정에 대한 커밋
-- docs : 문서 수정에 대한 커밋
-- style : 코드 스타일 혹은 포맷 등에 관한 커밋
-- refactor : 코드 리팩토링에 대한 커밋
-
-<br>
+<img src="Doc\images\유스케이스.png" width="600" height="400"> <br>
  
 ## 🎨 시스템 다이어그램
 <img src="Doc\images\블록다이어그램.png" width="600" height="400"> <br>
 
-## 📱 화면 설계
-### 로그인 & 회원가입 
-  <img src="Doc/images/sign in_sign up.png" width="700" height="400">
 
-### 온보딩
-  <img src="Doc/images/onboarding_group.png" width="700" height="400">
-
-### 메인페이지 & 북마크
-  <img src="Doc/images/news_bookmark.png" width="700" height="400">
     
 <br>
     
@@ -77,6 +62,21 @@
 </div>
 <br>
 
+## 기대효과 및 활용방안
+
+### ⌛ **효율적인 시간 활용**
+
+현대인들의 바쁜 일상 속에서 뉴스를 신속하게 습득할 수 있는 기회를 제공할 것으로 기대된다. 출퇴근 시간이나 짧은 여유 시간에도 뉴스를 확인할 수 있어, 개인의 시간 활용에 대한 효율성이 증가할 것으로 보인다.
+
+### 😊 **인지적 부담 완화**
+
+긴 글을 읽는 것에 대한 부담을 감소시킴으로써, 뉴스를 소비하는 데 있어 인지적 부담이 덜어져 사용자들이 더욱 적극적으로 정보를 습득할 수 있게 될 것이다.
+
+### 📒 **효율적인 정보 관리**
+
+마이페이지와 스크랩 기능 제공으로, 사용자는 원하는 요약된 뉴스를 모아서 관리할 수 있다.  
+<br>
+
 ## 기술 스택
 
 ### Collaboration
@@ -93,9 +93,8 @@
 <div>
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"/> 
   <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=Django&logoColor=white">
-    <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
-    <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"/>
-
+   <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+  
 </div> <br>
 
 ### Frontend
@@ -119,11 +118,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 <br>
 
-## 일정 관리
-
-<img src="Doc\images\gantt.png" width="1000" height="400">
-<br>
-
 ## 이슈 관리
 
 <img src="Doc\images\이슈관리1.png" width="700" height="300">  
@@ -131,25 +125,15 @@ https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/issues
 
 <br></br>
 
+## Documents
+📜 계획서 & 보고서 : [수행 계획서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/) [중간 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)  [최종 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/3_1_OSSProj_08_JCL_%EC%B5%9C%EC%A2%85%EB%B3%B4%EA%B3%A0%EC%84%9C.md)  
+
+📜 발표자료 : [제안 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/) [중간 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+
+📜 회의록 : [회의록](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/4_2_OSSProj_08_JCL_%ED%9A%8C%EC%9D%98%EB%A1%9D.pdf)  
+<br>  
+
+
 ## 참고 프로젝트
   [2022-2-OSSProj-KKJ-5 : URL 요약 정리 및 공유 웹 사이트](https://github.com/CSID-DGU/2022-2-OSSProj-KKJ-5.git)  
  <br> 
-
-## 수행 계획서 & 중간보고서
-📜[수행 계획서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/)  
-📜[중간보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)  
-<br>  
-
-## 기대효과 및 활용방안
-
-### ⌛ **효율적인 시간 활용**
-
-현대인들의 바쁜 일상 속에서 뉴스를 신속하게 습득할 수 있는 기회를 제공할 것으로 기대된다. 출퇴근 시간이나 짧은 여유 시간에도 뉴스를 확인할 수 있어, 개인의 시간 활용에 대한 효율성이 증가할 것으로 보인다.
-
-### 😊 **인지적 부담 완화**
-
-긴 글을 읽는 것에 대한 부담을 감소시킴으로써, 뉴스를 소비하는 데 있어 인지적 부담이 덜어져 사용자들이 더욱 적극적으로 정보를 습득할 수 있게 될 것이다.
-
-### 📒 **효율적인 정보 관리**
-
-마이페이지와 스크랩 기능 제공으로, 사용자는 원하는 요약된 뉴스를 모아서 관리할 수 있다.

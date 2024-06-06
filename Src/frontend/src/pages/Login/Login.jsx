@@ -63,7 +63,7 @@ export const Login = () => {
 
       // 로그인 성공 후
       setIsLoggedIn(true);
-      navigate('/main');
+      navigate('/politics');
     } catch (error) {
       if (error.response && error.response.data) {
         // 서버가 응답으로 오류 메시지를 보냈을 경우
