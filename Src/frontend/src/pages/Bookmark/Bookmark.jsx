@@ -1,4 +1,3 @@
-// BookmarkPage.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -62,32 +61,17 @@ export const Bookmark = () => {
       fetchBookmarkedNews();
     }
   }, [csrfToken]);
-  const deleteBookmark = async (index, bookmarkId) => {
+
+  const deleteBookmark = async (index) => {
     console.log('CSRF Token:', csrfToken);
     try {
-      const response = await axios.get('http://localhost:8000/bookmark/myarticles/', {
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
-        withCredentials: true,
-      });
-  
-      if (response.status === 200 || response.status === 204) {
-        // 상태 코드가 200 또는 204인 경우 삭제 성공
-        console.log('북마크 삭제 성공, 인덱스:', index);
-  
-        // 북마크 삭제 후에도 로컬 상태에서도 제거
-        const filteredBookmarks = [...bookmarkedNews];
-        filteredBookmarks.splice(index, 1);
-        setBookmarkedNews(filteredBookmarks);
-      } else {
-        console.error('북마크 삭제 실패, 응답 상태 코드:', response.status);
-      }
+      const filteredBookmarks = bookmarkedNews.filter((_, i) => i !== index);
+      setBookmarkedNews(filteredBookmarks);
+      console.log('북마크 삭제 성공, 인덱스:', index);
     } catch (error) {
       console.error('Error deleting bookmark:', error);
     }
-  };
-  
+  };    
   return (
     <Root>
       <TypoContainer>
@@ -111,8 +95,8 @@ export const Bookmark = () => {
                 <BookmarkButton
                   src="bookmark_on.svg"
                   alt="북마크 해제"
-                  onClick={() => deleteBookmark(index, bookmark.id)} 
-                />
+                  onClick={() => deleteBookmark(index)} 
+                  />
                 <TitleTypo size="11px" style={{ cursor: 'pointer' }}>
                   {bookmark.title}
                 </TitleTypo>
