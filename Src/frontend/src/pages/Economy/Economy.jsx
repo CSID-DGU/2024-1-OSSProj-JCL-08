@@ -1,8 +1,8 @@
 //Politics.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-//import DefaultImage from './Icon.png'; // 기본 이미지 경로
+import defaultImage from "./Image.svg"; // 기본 이미지 경로
 
 import {
   Typo,
@@ -21,33 +21,31 @@ import {
   TitleTypo,
   ContentTypo,
   NewsImage,
+  FixedText,
+  LoadingImage,
+  LoadingWrapper,
+  ReadMoreLink,
+  SelectedCategoryButton
 } from "./styled";
-
 
 export const Economy = () => {
   const navigate = useNavigate();
-
-  //카테고리 선택 버튼
-  const [selectedButton, setSelectedButton] = useState("all");
-
-  const handleButtonClick = (category) => {
-    setSelectedButton(category);
-    console.log("Selected Category:", category);
-  };
-
+  const [selectedCategory, setSelectedCategory] = useState(""); // 선택된 카테고리 상태 추가
   const [newsData, setNewsData] = useState([]);
-  const [csrfToken, setCsrfToken] = useState('');
+  const [csrfToken, setCsrfToken] = useState("");
   const [bookmarkedContents, setBookmarkedContents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
 
   useEffect(() => {
     // CSRF 토큰을 가져오는 함수
     const fetchCsrfToken = async () => {
       let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
           const cookie = cookies[i].trim();
-          if (cookie.substring(0, 10) === 'csrftoken=') {
+          if (cookie.substring(0, 10) === "csrftoken=") {
             cookieValue = decodeURIComponent(cookie.substring(10));
             break;
           }
@@ -68,15 +66,16 @@ export const Economy = () => {
   // 카테고리에 따른 뉴스 데이터를 불러오는 함수
   const fetchNewsData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/mainpage/economy/`
-      );
+      const response = await axios.get(`http://localhost:8000/mainpage/economy/`);
       setNewsData(response.data.summarized_news);
       setBookmarkedContents(new Array(response.data.summarized_news.length).fill(false));
     } catch (error) {
-      console.error('뉴스 데이터 가져오기 실패:', error);
+      console.error("뉴스 데이터 가져오기 실패:", error);
+    } finally {
+      setIsLoading(false); // 데이터 로딩 완료 후 로딩 상태 업데이트
     }
   };
+
 
   // 북마크 이미지
   const bookmarkImage = {
@@ -86,10 +85,11 @@ export const Economy = () => {
 
   // 북마크 추가 함수
   const addBookmark = async (news) => {
-    console.log('addBookmark called with news:', news); // 콘솔 로그 추가
-    console.log('CSRF Token:', csrfToken);
+    console.log("addBookmark called with news:", news); // 콘솔 로그 추가
+    console.log("CSRF Token:", csrfToken);
     try {
-      const response = await axios.post('http://localhost:8000/mainpage/add_bookmark/',
+      const response = await axios.post(
+        "http://localhost:8000/mainpage/add_bookmark/",
         {
           title: news.title,
           content: news.content,
@@ -100,25 +100,25 @@ export const Economy = () => {
         },
         {
           headers: {
-            'X-CSRFToken': csrfToken,
+            "X-CSRFToken": csrfToken,
           },
           withCredentials: true,
         }
       );
-      console.log('북마크 추가 성공:', response.data);
+      console.log("북마크 추가 성공:", response.data);
     } catch (error) {
-      console.error('북마크 추가 실패:', error);
+      console.error("북마크 추가 실패:", error);
     }
   };
 
   // 북마크 토글 함수
   const handleBookmarkClick = (index) => {
-    console.log('handleBookmarkClick called with index:', index); // 콘솔 로그 추가
+    console.log("handleBookmarkClick called with index:", index); // 콘솔 로그 추가
     const newBookmarkedContents = [...bookmarkedContents];
     newBookmarkedContents[index] = !newBookmarkedContents[index];
     setBookmarkedContents(newBookmarkedContents);
 
-    console.log('Bookmark Clicked:', newBookmarkedContents); // 콘솔 로그 추가
+    console.log("Bookmark Clicked:", newBookmarkedContents); // 콘솔 로그 추가
 
     // 북마크 추가 요청 보내기
     if (newBookmarkedContents[index]) {
@@ -129,51 +129,78 @@ export const Economy = () => {
     localStorage.setItem("bookmarks", JSON.stringify(newBookmarkedContents));
   };
 
-/*
-  const NewsImage = ({ src }) => {
-    const handleImageError = (e) => {
-      e.target.src = DefaultImage;
-    };
-  
-    return (
-      <img src={src} onError={handleImageError} alt="News" />
-    );
+  const handleImageError = (e) => {
+    e.target.src = defaultImage;
   };
-*/
+
   return (
     <Root>
-
       <TypoContainer>
         <Typo size="48px" color="#1D24CA">
           요약 뉴스
         </Typo>
       </TypoContainer>
-
       <CategoryBox>
-        <CategoryButton onClick={() => navigate("/politics")}>
+        <CategoryButton
+          as={selectedCategory === "politics" ? SelectedCategoryButton : "button"}
+          onClick={() => {
+            navigate("/politics");
+            setSelectedCategory("politics");
+          }}
+        >
           <Typo size="22px">정치</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => navigate("/economy")}>
+        <CategoryButton
+          as={selectedCategory === "economy" ? SelectedCategoryButton : "button"}
+          onClick={() => {
+            navigate("/economy");
+            setSelectedCategory("economy");
+          }}
+        >
           <Typo size="22px">경제</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => navigate("/society")}>
+        <CategoryButton
+          as={selectedCategory === "society" ? SelectedCategoryButton : "button"}
+          onClick={() => {
+            navigate("/society");
+            setSelectedCategory("society");
+          }}
+        >
           <Typo size="22px">사회</Typo>
         </CategoryButton>
-        <CategoryButton onClick={() => navigate("/bookmark")}>
+        <CategoryButton
+          as={selectedCategory === "bookmark" ? SelectedCategoryButton : "button"}
+          onClick={() => {
+            navigate("/bookmark");
+            setSelectedCategory("bookmark");
+          }}
+        >
           <Typo size="22px">북마크</Typo>
         </CategoryButton>
       </CategoryBox>
 
       <ContentsBox>
-        {newsData &&
+        {isLoading ? ( // 로딩 중일 때 로딩 아이콘 표시
+                <LoadingWrapper>
+
+          <LoadingImage src="Loading.gif" alt="Loading..." />
+          </LoadingWrapper>
+
+        ) : (
+          newsData &&
           newsData.map((news, index) => (
             <Contents key={index}>
               <ContentsBox2>
                 <Layout_R>
                   <ImageFrame>
-                    <NewsImage src={news.img} />
+                    <NewsImage
+                      src={news.img || defaultImage}
+                      onError={handleImageError}
+                    />{" "}
                   </ImageFrame>
-                  <a href={news.news_url}>원문 보기 </a>
+                  <ReadMoreLink href={news.news_url} style={{ fontSize: "10px" }}>
+                    원문 보기{" "}
+                  </ReadMoreLink>
                 </Layout_R>
                 <Layout_L>
                   <BookmarkButton
@@ -186,24 +213,26 @@ export const Economy = () => {
                     onClick={() => handleBookmarkClick(index)}
                   />
                   <TitleTypo
-                    size="11px"
-                    style={{ cursor: "pointer" }} // 클릭 가능한 커서 스타일 추가
+                    size="12px"
+                    style={{ cursor: "pointer" }}
                   >
                     {news.title}
                   </TitleTypo>
-                  <ContentTypo size="8px">{news.content}</ContentTypo>
-
-                  <TypoWhite size="10px" top="10px">
-                  {news.journalist} 
-                  </TypoWhite>
-                  <TypoWhite size="10px" top="7px">
-{news.date}                  </TypoWhite>
+                  <ContentTypo size="9px">{news.content}</ContentTypo>
+                  <FixedText>
+                    <TypoWhite size="8px" top="10px" color="#91969E">
+                      {news.journalist}
+                    </TypoWhite>
+                    <TypoWhite size="8px" top="3px" color="#91969E">
+                      {news.date}
+                    </TypoWhite>
+                  </FixedText>
                 </Layout_L>
               </ContentsBox2>
             </Contents>
-          ))}
+          ))
+        )}
       </ContentsBox>
-
     </Root>
   );
 };

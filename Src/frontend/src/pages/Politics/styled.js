@@ -12,13 +12,13 @@ const commonFontSize = css`
 `;
 
 export const Root = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  `;
+`;
 
 export const Typo = styled.span`
   display: ${(props) => props.display || "block"};
@@ -35,7 +35,6 @@ export const Typo = styled.span`
   ${customMargin}s
 `;
 
-
 export const TypoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,14 +47,14 @@ export const TypoContainer = styled.div`
 `;
 
 export const CategoryBox = styled.div`
-align-items: flex-end;
-border-bottom: 1px solid #61656D;
-display: flex;
-gap: 30px;
-height: 34px;
-justify-content: center;
-padding: 10px 0px;
-width: 100%;
+  align-items: flex-end;
+  border-bottom: 1px solid #61656d;
+  display: flex;
+  gap: 30px;
+  height: 34px;
+  justify-content: center;
+  padding: 10px 0px;
+  width: 100%;
 `;
 
 export const CategoryButton = styled.button`
@@ -69,22 +68,28 @@ export const CategoryButton = styled.button`
   }
 `;
 
+export const SelectedCategoryButton = styled(CategoryButton)`
+  background-color: ${(props) => (props.selected ? "#1D24CA" : "white")};
+`;
+
 export const ContentsBox = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  `;
+`;
 
 export const ContentsBox2 = styled.div`
-border: 0.8px solid;
-border-color: #000000;
-border-radius: 10px;
-height: 176px;
-width: 345px;
-display: flex;
+  border: 0.8px solid;
+  border-color: #000000;
+  border-radius: 10px;
+  height: 176px;
+  width: 345px;
+  display: flex;
+  padding-bottom: 10px;
+  overflow: hidden;
 `;
 
 export const Contents = styled.div`
@@ -102,7 +107,7 @@ export const Contents = styled.div`
 export const TypoWhite = styled.span`
   display: ${(props) => props.display || "block"};
   width: ${(props) => props.width || "fit-content"};
-  color: #4E4B66;
+  color: ${(props) => props.color || "#4E4B66"};
   font-weight: ${(props) => props.weight || 600};
   line-height: normal;
   ${commonFontSize} // Reuse the common font size
@@ -111,8 +116,8 @@ export const TypoWhite = styled.span`
 export const TitleTypo = styled.span`
   display: ${(props) => props.display || "block"};
   width: ${(props) => props.width || "fit-content"};
-  color: #4E4B66;
-  font-weight: 800;
+  color: #4e4b66;
+  font-weight: 900;
   line-height: normal;
   ${commonFontSize} // Reuse the common font size
   ${customMargin}
@@ -122,7 +127,7 @@ export const TitleTypo = styled.span`
 export const ContentTypo = styled.span`
   display: ${(props) => props.display || "block"};
   width: ${(props) => props.width || "fit-content"};
-  color: #4E4B66;
+  color: #4e4b66;
   font-weight: 600;
   line-height: normal;
   ${commonFontSize} // Reuse the common font size
@@ -130,28 +135,28 @@ export const ContentTypo = styled.span`
 `;
 
 export const Layout_R = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 50px;
-height: 176px;
-flex-shrink: 0;
-padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+  height: 176px;
+  flex-shrink: 0;
+  padding: 30px;
 `;
 
 export const Layout_L = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 200px;
-height: 176px;
-flex-shrink: 0;
-padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 176px;
+  flex-shrink: 0;
+  padding-left: 10px;
+  padding-bottom: 10px;
 `;
 
 export const ImageFrame = styled.div`
   border: 1px solid;
-  border-color: #C4C4C4;
+  border-color: #c4c4c4;
   border-radius: 8.38px;
   width: 88px;
   height: 88px;
@@ -160,16 +165,41 @@ export const ImageFrame = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  `;
-  export const NewsImage = styled.img`
+`;
+export const NewsImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 `;
-  export const BookmarkButton = styled.img`
-    cursor: pointer;
-    margin-left: 210px;
-    margin-top: 5px;
-    width: 20px;
-    height: 20px;
-  `;
+export const BookmarkButton = styled.img`
+  cursor: pointer;
+  margin-left: 200px;
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+`;
+
+export const FixedText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const LoadingImage = styled.img`
+  width: 200px;
+  height: 200px;
+  transform: translateY(-100px); // 로딩 이미지를 50px 위로 이동
+`;
+export const ReadMoreLink = styled.a`
+  font-size: 10px;
+  display: block;
+  margin-top: 10px;
+  text-align: right;
+`;
