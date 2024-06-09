@@ -16,7 +16,8 @@ import {
   TitleTypo,
   ContentTypo,
   NewsImage,
-} from './styled'; // styled 컴포넌트 경로에 맞게 조정하세요.
+  ReadMoreLink
+} from './styled'; 
 
 export const Bookmark = () => {
   const [csrfToken, setCsrfToken] = useState('');
@@ -61,33 +62,32 @@ export const Bookmark = () => {
       fetchBookmarkedNews();
     }
   }, [csrfToken]);
-  
-  const deleteBookmark = async (bookmark_id) => {
+  const deleteBookmark = async (index, bookmarkId) => {
     console.log('CSRF Token:', csrfToken);
     try {
-      const response = await axios.post('http://localhost:8000/mainpage/delete_bookmark/', 
-        {bookmark_id: bookmark_id},
-        {
-          headers: {
-            'X-CSRFToken': csrfToken,
-            //'Content-Type': 'application/json'
-          },
-          withCredentials: true,
+      const response = await axios.get('http://localhost:8000/bookmark/myarticles/', {
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+        withCredentials: true,
       });
-      console.log('북마크 삭제 성공:', response.data);
-      setBookmarkedNews((prev) => prev.filter((bookmark) => bookmark.id !== bookmark_id));
+  
+      if (response.status === 200 || response.status === 204) {
+        // 상태 코드가 200 또는 204인 경우 삭제 성공
+        console.log('북마크 삭제 성공, 인덱스:', index);
+  
+        // 북마크 삭제 후에도 로컬 상태에서도 제거
+        const filteredBookmarks = [...bookmarkedNews];
+        filteredBookmarks.splice(index, 1);
+        setBookmarkedNews(filteredBookmarks);
+      } else {
+        console.error('북마크 삭제 실패, 응답 상태 코드:', response.status);
+      }
     } catch (error) {
       console.error('Error deleting bookmark:', error);
     }
   };
-
   
-
-  const handleBookmarkClick = (bookmark_id) => {
-    console.log('handleBookmarkClick called with bookmarkId:', bookmark_id);
-    deleteBookmark(bookmark_id);
-  };
-
   return (
     <Root>
       <TypoContainer>
@@ -97,26 +97,27 @@ export const Bookmark = () => {
       </TypoContainer>
 
       <ContentsBox>
-        {bookmarkedNews.map((bookmark,bookmark_id) => (
-          <Contents key={bookmark_id}>
+        {bookmarkedNews.map((bookmark, index) => (
+          <Contents key={index}>
             <ContentsBox2>
               <Layout_R>
                 <ImageFrame>
                   <NewsImage src={bookmark.img_url} />
                 </ImageFrame>
-                <a href={bookmark.news_url}>원문 보기 </a>
-              </Layout_R>
+                <ReadMoreLink href={bookmark.news_url} style={{ fontSize: "10px" }}>
+                    원문 보기{" "}
+                  </ReadMoreLink>              </Layout_R>
               <Layout_L>
                 <BookmarkButton
                   src="bookmark_on.svg"
                   alt="북마크 해제"
-                  onClick={() => deleteBookmark(bookmark_id)}
+                  onClick={() => deleteBookmark(index, bookmark.id)} 
                 />
                 <TitleTypo size="11px" style={{ cursor: 'pointer' }}>
                   {bookmark.title}
                 </TitleTypo>
                 <ContentTypo size="8px">{bookmark.content}</ContentTypo>
-              </Layout_L>
+              </Layout_L> 
             </ContentsBox2>
           </Contents>
         ))}

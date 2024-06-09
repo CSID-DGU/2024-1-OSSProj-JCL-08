@@ -173,3 +173,10 @@ export const ImageFrame = styled.div`
     width: 20px;
     height: 20px;
   `;
+
+  export const ReadMoreLink = styled.a`
+  font-size: 10px;
+  display: block; 
+  margin-top: 10px; 
+  text-align: right; 
+`;
