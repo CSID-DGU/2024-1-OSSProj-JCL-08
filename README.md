@@ -5,6 +5,7 @@
 <br>
 
 ## 👨🏼‍💻 프로젝트 소개
+
   <img src="Doc/images/news_bookmark.png" width="700" height="400">
 
 - 매일 쏟아지는 뉴스 속에서 중요한 내용만을 빠르게 제공해줍니다.
@@ -25,12 +26,11 @@
 ## 📜 유즈케이스
 
 <img src="Doc\images\유스케이스.png" width="600" height="400"> <br>
- 
+
 ## 🎨 시스템 다이어그램
+
 <img src="Doc\images\블록다이어그램.png" width="600" height="400"> <br>
 
-
-    
 <br>
     
 ## 🐱 기존 시스템과의 차별점 및 개선점
@@ -126,14 +126,15 @@ https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/issues
 <br></br>
 
 ## Documents
-📜 계획서 & 보고서 : [수행 계획서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/) [중간 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)  [최종 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/3_1_OSSProj_08_JCL_%EC%B5%9C%EC%A2%85%EB%B3%B4%EA%B3%A0%EC%84%9C.md)  
 
-📜 발표자료 : [제안 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/) [중간 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+📜 계획서 & 보고서 : [수행 계획서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_1_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.md/) [중간 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf) [최종 보고서](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/3_1_OSSProj_08_JCL_%EC%B5%9C%EC%A2%85%EB%B3%B4%EA%B3%A0%EC%84%9C.md)
+
+📜 발표자료 : [제안 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/1_2_OSSProj_08_JCL_%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pptx) [중간 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/2_2_OSSProj_08_JCL_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf) [최종 발표자료](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/3_2_OSSProj_08_JCL_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf)
 
 📜 회의록 : [회의록](https://github.com/CSID-DGU/2024-1-OSSProj-JCL-08/blob/main/Doc/4_2_OSSProj_08_JCL_%ED%9A%8C%EC%9D%98%EB%A1%9D.pdf)  
-<br>  
-
+<br>
 
 ## 참고 프로젝트
-  [2022-2-OSSProj-KKJ-5 : URL 요약 정리 및 공유 웹 사이트](https://github.com/CSID-DGU/2022-2-OSSProj-KKJ-5.git)  
- <br> 
+
+[2022-2-OSSProj-KKJ-5 : URL 요약 정리 및 공유 웹 사이트](https://github.com/CSID-DGU/2022-2-OSSProj-KKJ-5.git)  
+ <br>
