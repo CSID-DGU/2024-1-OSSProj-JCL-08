@@ -10,6 +10,7 @@ import { Politics } from "./pages/Politics/Politics.jsx";
 import { Economy } from "./pages/Economy/Economy.jsx";
 import { Society } from "./pages/Society/Society.jsx";
 import { BookmarkProvider } from './BookmarkContext';
+import { Loading } from "./pages/Loading/Loading.jsx";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/politics" element={<Politics />} />
       <Route path="/economy" element={<Economy />} />
       <Route path="/society" element={<Society />} />
+      <Route path="/loading" element={<Loading />} />
       </Routes>
     </BrowserRouter>
     </BookmarkProvider>
