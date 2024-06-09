@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import defaultImage from "./Image.svg"; // 기본 이미지 경로
 import {
   Typo,
   ContentsBox,
@@ -72,6 +73,12 @@ export const Bookmark = () => {
       console.error('Error deleting bookmark:', error);
     }
   };    
+
+  const handleImageError = (e) => {
+    e.target.src = defaultImage;
+  };
+
+
   return (
     <Root>
       <TypoContainer>
@@ -86,8 +93,10 @@ export const Bookmark = () => {
             <ContentsBox2>
               <Layout_R>
                 <ImageFrame>
-                  <NewsImage src={bookmark.img_url} />
-                </ImageFrame>
+                <NewsImage
+                      src={bookmark.img_url}
+                      onError={handleImageError}
+                    />                </ImageFrame>
                 <ReadMoreLink href={bookmark.news_url} style={{ fontSize: "10px" }}>
                     원문 보기{" "}
                   </ReadMoreLink>              </Layout_R>

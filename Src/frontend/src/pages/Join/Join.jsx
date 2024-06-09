@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Join.module.css';
 import { useNavigate } from 'react-router';
 import axios from '../../utils/axios'; 
@@ -10,6 +10,24 @@ export const Join = () => {
   const [password2, setPassword2] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    // CSRF 토큰을 가져오는 함수
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/accounts/csrf/', {
+          withCredentials: true,
+        });
+        setCsrfToken(response.data.csrftoken);
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
+
 
   const handleUsernameChange = e => {
     setUsername(e.target.value);
@@ -38,10 +56,14 @@ export const Join = () => {
           email: email,
         },
         {
+          headers: {
+            'X-CSRFToken': csrfToken,
+          },
           withCredentials: true,
         },
       );
       console.log('회원가입 성공:', response.data);
+      console.log('CSRF 토큰:', csrfToken);
       alert('회원가입이 완료되었습니다.');
       navigate('/');
     } catch (error) {
