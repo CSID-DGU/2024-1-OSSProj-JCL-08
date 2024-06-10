@@ -10,6 +10,34 @@
 
 - 로컬환경에서 진행
 
+- 백엔드
+
+**1. cd Src -> cd backend**
+
+**2. Create and activate the virtual environment**
+
+```
+python -m venv venv
+venv\Scripts\activate
+```
+
+**3. Install required packages**
+
+```
+pip install -r requirements.txt
+```
+
+**4. Run the server**
+
+`python manage.py migrate
+python manage.py runserver`
+
+- 프론트엔드
+1. cd Src -> cd frontend
+2. `npm install`
+3. `npm start`
+
+
 ## 3. 프로젝트 제품 운영 방법  
 
 1. 프로젝트 제품의 시연을 위한 환경구성 및 운영방법 
